@@ -92,6 +92,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		'App\UI\Post\PostPresenter' => [2 => ['application.5']],
 		'NetteModule\ErrorPresenter' => [2 => ['application.6']],
 		'NetteModule\MicroPresenter' => [2 => ['application.7']],
+		'App\Model\PostFacade' => [['02']],
 	];
 
 
@@ -104,6 +105,12 @@ class Container_da5c5dea5b extends Nette\DI\Container
 	public function createService01(): Nette\Application\Routers\RouteList
 	{
 		return App\Core\RouterFactory::createRouter();
+	}
+
+
+	public function createService02(): App\Model\PostFacade
+	{
+		return new App\Model\PostFacade($this->getService('database.default.explorer'));
 	}
 
 
@@ -149,7 +156,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 
 	public function createServiceApplication__4(): App\UI\Home\HomePresenter
 	{
-		$service = new App\UI\Home\HomePresenter($this->getService('database.default.explorer'));
+		$service = new App\UI\Home\HomePresenter($this->getService('02'));
 		$service->injectPrimary(
 			$this->getService('http.request'),
 			$this->getService('http.response'),
@@ -166,7 +173,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 
 	public function createServiceApplication__5(): App\UI\Post\PostPresenter
 	{
-		$service = new App\UI\Post\PostPresenter($this->getService('database.default.explorer'));
+		$service = new App\UI\Post\PostPresenter($this->getService('02'));
 		$service->injectPrimary(
 			$this->getService('http.request'),
 			$this->getService('http.response'),

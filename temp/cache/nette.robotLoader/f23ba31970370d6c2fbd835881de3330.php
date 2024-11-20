@@ -20,17 +20,22 @@ return array (
     'App\\UI\\Edit\\EditPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Edit/EditPresenter.php',
-      1 => 1730557826,
+      1 => 1732098200,
     ),
     'App\\UI\\Home\\HomePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Home/HomePresenter.php',
-      1 => 1726658368,
+      1 => 1732099694,
     ),
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1727258800,
+      1 => 1732101299,
+    ),
+    'App\\Model\\PostFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
+      1 => 1732101276,
     ),
     'App\\Bootstrap' => 
     array (
@@ -45,11 +50,14 @@ return array (
   ),
   1 => 
   array (
-    'null' => 1,
-    'App\\UI\\Home\\HomeDefaultTemplate' => 2,
-    'App\\UI\\Home\\HomeTemplate' => 2,
+    'null' => 3,
+    'App\\UI\\Home\\HomeDefaultTemplate' => 3,
+    'App\\UI\\Home\\HomeTemplate' => 3,
     'App\\UI\\Post\\PostShowTemplate' => 3,
     'App\\UI\\Post\\PostTemplate' => 3,
+    'App\\UI\\Edit\\EditEditTemplate' => 2,
+    'App\\UI\\Edit\\EditTemplate' => 2,
+    'App\\UI\\Post\\Nette\\Application\\UI\\Presenter' => 1,
   ),
   2 => 
   array (
