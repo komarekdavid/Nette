@@ -20,7 +20,7 @@ return array (
     'App\\UI\\Edit\\EditPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Edit/EditPresenter.php',
-      1 => 1732098200,
+      1 => 1732698592,
     ),
     'App\\UI\\Home\\HomePresenter' => 
     array (
@@ -30,12 +30,17 @@ return array (
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1732697904,
+      1 => 1732698004,
+    ),
+    'App\\UI\\Sign\\SignPresenter' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Sign/SignPresenter.php',
+      1 => 1732698820,
     ),
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1732697888,
+      1 => 1732698220,
     ),
     'App\\Bootstrap' => 
     array (
@@ -55,9 +60,13 @@ return array (
     'App\\UI\\Home\\HomeTemplate' => 3,
     'App\\UI\\Post\\PostShowTemplate' => 3,
     'App\\UI\\Post\\PostTemplate' => 3,
-    'App\\UI\\Edit\\EditEditTemplate' => 2,
-    'App\\UI\\Edit\\EditTemplate' => 2,
+    'App\\UI\\Edit\\EditEditTemplate' => 3,
+    'App\\UI\\Edit\\EditTemplate' => 3,
     'App\\UI\\Post\\Nette\\Application\\UI\\Presenter' => 1,
+    'App\\UI\\Sign\\SignInTemplate' => 1,
+    'App\\UI\\Sign\\SignTemplate' => 3,
+    'App\\UI\\Edit\\EditCreateTemplate' => 1,
+    'App\\UI\\Sign\\SignOutTemplate' => 2,
   ),
   2 => 
   array (

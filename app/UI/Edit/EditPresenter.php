@@ -1,15 +1,16 @@
 <?php
 namespace App\UI\Edit;
 
+use App\Model\PostFacade;
 use Nette;
 use Nette\Application\UI\Form;
 
 final class EditPresenter extends Nette\Application\UI\Presenter
 {
-	public function __construct(
-		private Nette\Database\Explorer $database,
-	) {
-	}
+    public function __construct(
+        private PostFacade $facade,
+    ) {
+    }
 
     protected function createComponentPostForm(): Form
     {
@@ -24,38 +25,38 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
         return $form;
     }
+
     private function postFormSucceeded(array $data): void
     {
         $id = $this->getParameter('id');
-    
-        if ($id) {
-            $post = $this->database
-                ->table('posts')
-                ->get($id);
-            $post->update($data);
-    
-        } else {
-            $post = $this->database
-                ->table('posts')
-                ->insert($data);
-        }
-    
+
+        $post = $this->facade->savePost($data, $id);
+
         $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
         $this->redirect('Post:show', $post->id);
     }
+
     public function renderEdit(int $id): void
     {
-        $post = $this->database
-            ->table('posts')
-            ->get($id);
+        $post = $this->facade->getPostById($id);
 
         if (!$post) {
-            $this->error('Post not found');
+            $this->error('Příspěvek nebyl nalezen');
         }
 
         $this->getComponent('postForm')
             ->setDefaults($post->toArray());
     }
+
+    public function startup(): void
+    {
+        parent::startup();
+
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Sign:in');
+        }
+    }
+
 
 
 }

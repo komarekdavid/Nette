@@ -8,6 +8,6 @@
 
 		<div>{$post->content|truncate:256}</div>
 	</div>
-	<a n:href="Edit:create">Napsat nový příspěvek</a>
+	<a n:href="Edit:create" n:if="$user->isLoggedIn()">Vytvořit příspěvek</a>
 
 {/block}

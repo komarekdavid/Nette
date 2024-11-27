@@ -70,10 +70,12 @@ final class Template_b17a636c21 extends Latte\Runtime\Template
 
 		}
 
-		echo '	<a href="';
-		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:create')) /* line 11 */;
-		echo '">Napsat nový příspěvek</a>
-
+		if ($user->isLoggedIn()) /* line 11 */ {
+			echo '	<a href="';
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:create')) /* line 11 */;
+			echo '">Vytvořit příspěvek</a>
 ';
+		}
+		echo "\n";
 	}
 }

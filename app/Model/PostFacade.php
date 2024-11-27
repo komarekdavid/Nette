@@ -22,6 +22,17 @@ final class PostFacade
         return $this->database->table('posts')->get($id);
     }
 
+    public function savePost(array $data, ?int $id = null)
+    {
+        if ($id) {
+            $post = $this->database->table('posts')->get($id);
+            $post->update($data);
+        } else {
+            $post = $this->database->table('posts')->insert($data);
+        }
+
+        return $post;
+    }
 
     public function getCommentsForPost(int $postId)
     {
