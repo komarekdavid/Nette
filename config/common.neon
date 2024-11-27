@@ -20,8 +20,14 @@ latte:
 	extensions:
 		- App\UI\Accessory\LatteExtension
 
+services:
+	- App\Model\PostFacade
+
 
 di:
 	export:
 		parameters: no
 		tags: no
+security:
+	users:
+		admin: secret  # user 'admin', password 'secret'

@@ -25,17 +25,17 @@ return array (
     'App\\UI\\Home\\HomePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Home/HomePresenter.php',
-      1 => 1732099694,
+      1 => 1732697374,
     ),
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1732101299,
+      1 => 1732697904,
     ),
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1732101276,
+      1 => 1732697888,
     ),
     'App\\Bootstrap' => 
     array (

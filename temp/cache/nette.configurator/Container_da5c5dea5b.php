@@ -16,6 +16,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		'database.default.context' => 'database.default.explorer',
 		'httpRequest' => 'http.request',
 		'httpResponse' => 'http.response',
+		'nette.authenticator' => 'security.authenticator',
 		'nette.database.default' => 'database.default',
 		'nette.database.default.context' => 'database.default.explorer',
 		'nette.httpRequestFactory' => 'http.requestFactory',
@@ -52,14 +53,16 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		'Nette\Security\Passwords' => [['security.passwords']],
 		'Nette\Security\UserStorage' => [['security.userStorage']],
 		'Nette\Security\User' => [['security.user']],
+		'Nette\Security\IAuthenticator' => [['security.authenticator']],
 		'Nette\Http\Session' => [['session.session']],
 		'Tracy\ILogger' => [['tracy.logger']],
 		'Tracy\BlueScreen' => [['tracy.blueScreen']],
 		'Tracy\Bar' => [['tracy.bar']],
-		'Nette\Routing\RouteList' => [['01']],
-		'Nette\Routing\Router' => [['01']],
-		'ArrayAccess' => [2 => ['01', 'application.1', 'application.3', 'application.4', 'application.5']],
-		'Nette\Application\Routers\RouteList' => [['01']],
+		'App\Model\PostFacade' => [['01']],
+		'Nette\Routing\RouteList' => [['02']],
+		'Nette\Routing\Router' => [['02']],
+		'ArrayAccess' => [2 => ['02', 'application.1', 'application.3', 'application.4', 'application.5']],
+		'Nette\Application\Routers\RouteList' => [['02']],
 		'Nette\Application\UI\Presenter' => [2 => ['application.1', 'application.3', 'application.4', 'application.5']],
 		'Nette\Application\UI\Control' => [2 => ['application.1', 'application.3', 'application.4', 'application.5']],
 		'Nette\Application\UI\Component' => [2 => ['application.1', 'application.3', 'application.4', 'application.5']],
@@ -92,7 +95,6 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		'App\UI\Post\PostPresenter' => [2 => ['application.5']],
 		'NetteModule\ErrorPresenter' => [2 => ['application.6']],
 		'NetteModule\MicroPresenter' => [2 => ['application.7']],
-		'App\Model\PostFacade' => [['02']],
 	];
 
 
@@ -102,15 +104,15 @@ class Container_da5c5dea5b extends Nette\DI\Container
 	}
 
 
-	public function createService01(): Nette\Application\Routers\RouteList
+	public function createService01(): App\Model\PostFacade
 	{
-		return App\Core\RouterFactory::createRouter();
+		return new App\Model\PostFacade($this->getService('database.default.explorer'));
 	}
 
 
-	public function createService02(): App\Model\PostFacade
+	public function createService02(): Nette\Application\Routers\RouteList
 	{
-		return new App\Model\PostFacade($this->getService('database.default.explorer'));
+		return App\Core\RouterFactory::createRouter();
 	}
 
 
@@ -121,7 +123,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 			$this->getService('http.request'),
 			$this->getService('http.response'),
 			$this->getService('application.presenterFactory'),
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('session.session'),
 			$this->getService('security.user'),
 			$this->getService('latte.templateFactory'),
@@ -144,7 +146,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 			$this->getService('http.request'),
 			$this->getService('http.response'),
 			$this->getService('application.presenterFactory'),
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('session.session'),
 			$this->getService('security.user'),
 			$this->getService('latte.templateFactory'),
@@ -156,12 +158,12 @@ class Container_da5c5dea5b extends Nette\DI\Container
 
 	public function createServiceApplication__4(): App\UI\Home\HomePresenter
 	{
-		$service = new App\UI\Home\HomePresenter($this->getService('02'));
+		$service = new App\UI\Home\HomePresenter($this->getService('01'));
 		$service->injectPrimary(
 			$this->getService('http.request'),
 			$this->getService('http.response'),
 			$this->getService('application.presenterFactory'),
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('session.session'),
 			$this->getService('security.user'),
 			$this->getService('latte.templateFactory'),
@@ -173,12 +175,12 @@ class Container_da5c5dea5b extends Nette\DI\Container
 
 	public function createServiceApplication__5(): App\UI\Post\PostPresenter
 	{
-		$service = new App\UI\Post\PostPresenter($this->getService('02'));
+		$service = new App\UI\Post\PostPresenter($this->getService('01'));
 		$service->injectPrimary(
 			$this->getService('http.request'),
 			$this->getService('http.response'),
 			$this->getService('application.presenterFactory'),
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('session.session'),
 			$this->getService('security.user'),
 			$this->getService('latte.templateFactory'),
@@ -196,7 +198,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 
 	public function createServiceApplication__7(): NetteModule\MicroPresenter
 	{
-		return new NetteModule\MicroPresenter($this, $this->getService('http.request'), $this->getService('01'));
+		return new NetteModule\MicroPresenter($this, $this->getService('http.request'), $this->getService('02'));
 	}
 
 
@@ -204,7 +206,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 	{
 		$service = new Nette\Application\Application(
 			$this->getService('application.presenterFactory'),
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('http.request'),
 			$this->getService('http.response'),
 		);
@@ -213,7 +215,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 			$service,
 		);
 		$this->getService('tracy.bar')->addPanel(new Nette\Bridges\ApplicationTracy\RoutingPanel(
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('http.request'),
 			$this->getService('application.presenterFactory'),
 		));
@@ -224,7 +226,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 	public function createServiceApplication__linkGenerator(): Nette\Application\LinkGenerator
 	{
 		return new Nette\Application\LinkGenerator(
-			$this->getService('01'),
+			$this->getService('02'),
 			$this->getService('http.request')->getUrl()->withoutUserInfo(),
 			$this->getService('application.presenterFactory'),
 		);
@@ -367,6 +369,12 @@ class Container_da5c5dea5b extends Nette\DI\Container
 	}
 
 
+	public function createServiceSecurity__authenticator(): Nette\Security\IAuthenticator
+	{
+		return new Nette\Security\SimpleAuthenticator(['admin' => 'secret'], ['admin' => null], ['admin' => []]);
+	}
+
+
 	public function createServiceSecurity__passwords(): Nette\Security\Passwords
 	{
 		return new Nette\Security\Passwords;
@@ -375,7 +383,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 
 	public function createServiceSecurity__user(): Nette\Security\User
 	{
-		$service = new Nette\Security\User($this->getService('security.userStorage'));
+		$service = new Nette\Security\User($this->getService('security.userStorage'), $this->getService('security.authenticator'));
 		$this->getService('tracy.bar')->addPanel(new Nette\Bridges\SecurityTracy\UserPanel($service));
 		return $service;
 	}

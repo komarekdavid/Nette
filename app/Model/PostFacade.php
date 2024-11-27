@@ -1,12 +1,12 @@
 <?php
 namespace App\Model;
 
-use Nette;
+use Nette\Database\Explorer;
 
 final class PostFacade
 {
     public function __construct(
-        private Nette\Database\Explorer $database,
+        private Explorer $database,
     ) {
     }
 
@@ -14,18 +14,16 @@ final class PostFacade
     {
         return $this->database
             ->table('posts')
-            ->where('created_at < ', new \DateTime)
             ->order('created_at DESC');
     }
 
     public function getPostById(int $id)
     {
-        return $this->database
-            ->table('posts')
-            ->get($id);
+        return $this->database->table('posts')->get($id);
     }
 
-    public function getCommentsByPostId(int $postId)
+
+    public function getCommentsForPost(int $postId)
     {
         return $this->database
             ->table('comments')
@@ -33,13 +31,13 @@ final class PostFacade
             ->order('created_at');
     }
 
-    public function addComment(int $postId, \stdClass $data): void
+    public function addComment(int $postId, string $name, ?string $email, string $content): void
     {
         $this->database->table('comments')->insert([
             'post_id' => $postId,
-            'name' => $data->name,
-            'email' => $data->email,
-            'content' => $data->content,
+            'name' => $name,
+            'email' => $email,
+            'content' => $content,
         ]);
     }
 }

@@ -7,12 +7,9 @@ use Nette\Application\UI\Form;
 
 final class PostPresenter extends Nette\Application\UI\Presenter
 {
-    private PostFacade $facade;
-
-    public function __construct(PostFacade $facade)
-    {
-        parent::__construct();
-        $this->facade = $facade;
+    public function __construct(
+        private PostFacade $facade,
+    ) {
     }
 
     public function renderShow(int $id): void
@@ -21,8 +18,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         if (!$post) {
             $this->error('Stránka nebyla nalezena');
         }
+
         $this->template->post = $post;
-        $this->template->comments = $this->facade->getCommentsByPostId($id);
+        $this->template->comments = $this->facade->getCommentsForPost($id);
     }
 
     protected function createComponentCommentForm(): Form
@@ -46,14 +44,11 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
     private function commentFormSucceeded(\stdClass $data): void
     {
-        $postId = $this->getParameter('id');
-        if ($postId) {
-            $this->facade->addComment($postId, $data);
+        $id = $this->getParameter('id');
 
-            $this->flashMessage('Děkuji za komentář', 'success');
-            $this->redirect('this');
-        } else {
-            $this->error('Neplatné ID příspěvku.');
-        }
+        $this->facade->addComment($id, $data->name, $data->email, $data->content);
+
+        $this->flashMessage('Děkuji za komentář', 'success');
+        $this->redirect('this');
     }
 }
