@@ -20,7 +20,7 @@ return array (
     'App\\UI\\Edit\\EditPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Edit/EditPresenter.php',
-      1 => 1733914044,
+      1 => 1733914813,
     ),
     'App\\UI\\Home\\HomePresenter' => 
     array (
@@ -30,7 +30,7 @@ return array (
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1733914208,
+      1 => 1733917094,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (
@@ -40,7 +40,7 @@ return array (
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1733914309,
+      1 => 1733917124,
     ),
     'App\\Bootstrap' => 
     array (
@@ -63,10 +63,12 @@ return array (
     'App\\UI\\Edit\\EditEditTemplate' => 3,
     'App\\UI\\Edit\\EditTemplate' => 3,
     'App\\UI\\Post\\Nette\\Application\\UI\\Presenter' => 1,
-    'App\\UI\\Sign\\SignInTemplate' => 2,
+    'App\\UI\\Sign\\SignInTemplate' => 3,
     'App\\UI\\Sign\\SignTemplate' => 3,
     'App\\UI\\Edit\\EditCreateTemplate' => 3,
-    'App\\UI\\Sign\\SignOutTemplate' => 2,
+    'App\\UI\\Sign\\SignOutTemplate' => 3,
+    'App\\UI\\Post\\PostDeleteCommentTemplate' => 3,
+    'App\\Model\\CommentService' => 3,
   ),
   2 => 
   array (

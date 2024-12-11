@@ -1,35 +1,57 @@
 {block content}
 
-<p><a n:href="Home:default">← zpět na výpis příspěvků</a></p>
+<div class="post-detail">
+	<p><a n:href="Home:default" class="back-link">← zpět na výpis příspěvků</a></p>
 
-<div class="date">{$post->created_at|date:'F j, Y'}</div>
+	<div class="post-meta">
+		<span class="date">{$post->created_at|date:'F j, Y'}</span>
+	</div>
 
-<h1 n:block="title">{$post->title}</h1>
+	<h1 n:block="title" class="post-title">{$post->title}</h1>
 
-<div class="post">{$post->content}</div>
- 
-{if $post->image}
-    <img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}"><br>
-    <a n:href="deleteImage! $post->id">Smazat obrázek</a>
-{/if}
+	<div class="post-content">{$post->content}</div>
 
+	<div class="post-image">
+		{if $post->image}
+			<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+			<br>
+			<a n:href="deleteImage! $post->id" class="delete-image-link">Smazat obrázek</a>
+		{else}
+			<img src="{$basePath}/upload/image.png" alt="Výchozí obrázek">
+		{/if}
+	</div>
 
-
-<a n:href="Edit:edit $post->id">Upravit příspěvek</a>
-
- 
-<h2>Vložte nový příspěvek</h2>
-
-{control commentForm}
-
-<h2>Komentáře</h2>
-
-<div class="comments">
-	{foreach $comments as $comment}
-		<p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">
-			{$comment->name}
-		</a></b> napsal:</p>
-
-		<div>{$comment->content}</div>
-	{/foreach}
+	<div class="post-actions">
+		<a n:href="Edit:edit $post->id" class="edit-link">Upravit příspěvek</a>
+	</div>
 </div>
+
+<div class="comments-section">
+	<h2>Komentáře</h2>
+
+	<div class="comments">
+		{foreach $comments as $comment}
+			<div class="comment" id="comment-{$comment->id}">
+				<p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email" class="comment-author">
+					{$comment->name}
+				</a></b> napsal:</p>
+
+				<div class="comment-content">{$comment->content}</div>
+
+				{if $user}
+					<a n:href="deleteComment! $comment->id" class="delete-comment-link">Smazat komentář</a>
+				{/if}
+			</div>
+		{/foreach}
+	</div>
+</div>
+
+<div class="comment-form-section">
+	<h2>Vložte nový příspěvek</h2>
+	{control commentForm}
+</div>
+
+
+
+
+{/block}

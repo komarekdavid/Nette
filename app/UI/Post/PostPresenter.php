@@ -70,4 +70,19 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
         $this->redirect('this'); // Přesměrování na aktuální stránku
     }
+    
+    public function handleDeleteComment(int $commentId): void
+    {
+        $comment = $this->facade->getCommentById($commentId);
+
+        if ($comment) {
+            $this->facade->deleteComment($commentId);
+            $this->flashMessage('Komentář byl úspěšně smazán.', 'success');
+        } else {
+            $this->flashMessage('Komentář nebyl nalezen nebo již byl smazán.', 'error');
+        }
+
+        $this->redirect('this'); 
+    }
+
 }

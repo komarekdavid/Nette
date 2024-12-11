@@ -32,7 +32,7 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 		extract($this->params);
 
 		if (!$this->getReferringTemplate() || $this->getReferenceType() === 'extends') {
-			foreach (array_intersect_key(['comment' => '28'], $this->params) as $ʟ_v => $ʟ_l) {
+			foreach (array_intersect_key(['comment' => '33'], $this->params) as $ʟ_v => $ʟ_l) {
 				trigger_error("Variable \$$ʟ_v overwritten in foreach on line $ʟ_l");
 			}
 		}
@@ -48,95 +48,125 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 		unset($ʟ_args);
 
 		echo '
-<p><a href="';
-		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Home:default')) /* line 3 */;
-		echo '">← zpět na výpis příspěvků</a></p>
+<div class="post-detail">
+	<p><a href="';
+		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Home:default')) /* line 4 */;
+		echo '" class="back-link">← zpět na výpis příspěvků</a></p>
 
-<div class="date">';
-		echo LR\Filters::escapeHtmlText(($this->filters->date)($post->created_at, 'F j, Y')) /* line 5 */;
-		echo '</div>
+	<div class="post-meta">
+		<span class="date">';
+		echo LR\Filters::escapeHtmlText(($this->filters->date)($post->created_at, 'F j, Y')) /* line 7 */;
+		echo '</span>
+	</div>
 
 ';
-		$this->renderBlock('title', get_defined_vars()) /* line 7 */;
+		$this->renderBlock('title', get_defined_vars()) /* line 10 */;
 		echo '
-<div class="post">';
-		echo LR\Filters::escapeHtmlText($post->content) /* line 9 */;
+	<div class="post-content">';
+		echo LR\Filters::escapeHtmlText($post->content) /* line 12 */;
 		echo '</div>
- 
+
+	<div class="post-image">
 ';
-		if ($post->image) /* line 11 */ {
-			echo '    <img src="';
-			echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($basePath)) /* line 12 */;
+		if ($post->image) /* line 15 */ {
+			echo '			<img src="';
+			echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($basePath)) /* line 16 */;
 			echo '/';
-			echo LR\Filters::escapeHtmlAttr($post->image) /* line 12 */;
+			echo LR\Filters::escapeHtmlAttr($post->image) /* line 16 */;
 			echo '" alt="Obrázek k článku ';
-			echo LR\Filters::escapeHtmlAttr($post->title) /* line 12 */;
-			echo '"><br>
-    <a href="';
-			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('deleteImage!', [$post->id])) /* line 13 */;
-			echo '">Smazat obrázek</a>
+			echo LR\Filters::escapeHtmlAttr($post->title) /* line 16 */;
+			echo '">
+			<br>
+			<a href="';
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('deleteImage!', [$post->id])) /* line 18 */;
+			echo '" class="delete-image-link">Smazat obrázek</a>
+';
+		} else /* line 19 */ {
+			echo '			<img src="';
+			echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($basePath)) /* line 20 */;
+			echo '/upload/image.png" alt="Výchozí obrázek">
 ';
 		}
-		echo '
+		echo '	</div>
 
+	<div class="post-actions">
+		<a href="';
+		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 25 */;
+		echo '" class="edit-link">Upravit příspěvek</a>
+	</div>
+</div>
 
-<a href="';
-		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 18 */;
-		echo '">Upravit příspěvek</a>
+<div class="comments-section">
+	<h2>Komentáře</h2>
 
- 
-<h2>Vložte nový příspěvek</h2>
-
+	<div class="comments">
 ';
-		$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
-		if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-		$ʟ_tmp->render() /* line 23 */;
-
-		echo '
-<h2>Komentáře</h2>
-
-<div class="comments">
-';
-		foreach ($comments as $comment) /* line 28 */ {
-			echo '		<p><b>';
+		foreach ($comments as $comment) /* line 33 */ {
+			echo '			<div class="comment" id="comment-';
+			echo LR\Filters::escapeHtmlAttr($comment->id) /* line 34 */;
+			echo '">
+				<p><b>';
 			$ʟ_tag[0] = '';
-			if ($comment->email) /* line 29 */ {
+			if ($comment->email) /* line 35 */ {
 				echo '<';
-				echo $ʟ_tmp = 'a' /* line 29 */;
+				echo $ʟ_tmp = 'a' /* line 35 */;
 				$ʟ_tag[0] = '</' . $ʟ_tmp . '>' . $ʟ_tag[0];
 				echo ' href="mailto:';
-				echo LR\Filters::escapeHtmlAttr($comment->email) /* line 29 */;
-				echo '">';
+				echo LR\Filters::escapeHtmlAttr($comment->email) /* line 35 */;
+				echo '" class="comment-author">';
 			}
 			echo '
-			';
-			echo LR\Filters::escapeHtmlText($comment->name) /* line 30 */;
+					';
+			echo LR\Filters::escapeHtmlText($comment->name) /* line 36 */;
 			echo '
-		';
+				';
 			echo $ʟ_tag[0];
 			echo '</b> napsal:</p>
 
-		<div>';
-			echo LR\Filters::escapeHtmlText($comment->content) /* line 33 */;
+				<div class="comment-content">';
+			echo LR\Filters::escapeHtmlText($comment->content) /* line 39 */;
 			echo '</div>
+
+';
+			if ($user) /* line 41 */ {
+				echo '					<a href="';
+				echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('deleteComment!', [$comment->id])) /* line 42 */;
+				echo '" class="delete-comment-link">Smazat komentář</a>
+';
+			}
+			echo '			</div>
 ';
 
 		}
 
+		echo '	</div>
+</div>
+
+<div class="comment-form-section">
+	<h2>Vložte nový příspěvek</h2>
+';
+		$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
+		if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
+		$ʟ_tmp->render() /* line 51 */;
+
 		echo '</div>
+
+
+
+
 ';
 	}
 
 
-	/** n:block="title" on line 7 */
+	/** n:block="title" on line 10 */
 	public function blockTitle(array $ʟ_args): void
 	{
 		extract($this->params);
 		extract($ʟ_args);
 		unset($ʟ_args);
 
-		echo '<h1>';
-		echo LR\Filters::escapeHtmlText($post->title) /* line 7 */;
+		echo '	<h1 class="post-title">';
+		echo LR\Filters::escapeHtmlText($post->title) /* line 10 */;
 		echo '</h1>
 ';
 	}

@@ -52,16 +52,19 @@ final class PostFacade
         ]);
     }
 
-    public function editPost(int $id, array $data): void
+    public function getCommentById(int $commentId)
     {
-        $post = $this->database->table('posts')->get($id);
-        if (!$post) {
-            throw new \RuntimeException('Příspěvek nebyl nalezen.');
-        }
-
-        $post->update($data);
+        return $this->database->table('comments')->get($commentId);
     }
 
+    public function deleteComment(int $commentId): void
+    {
+        $comment = $this->database->table('comments')->get($commentId);
+        if ($comment) {
+            $comment->delete();
+        }
+    }
+    
 
     
 }
