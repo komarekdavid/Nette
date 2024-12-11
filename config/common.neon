@@ -11,7 +11,7 @@ application:
 database:
 	dsn: 'mysql:host=mysql.muj.cloud;dbname=school_PhTT7'
 	user: 'school_PhTT7'
-	password: 'heslo123'
+	password: 'rootroot'
 
 
 latte:

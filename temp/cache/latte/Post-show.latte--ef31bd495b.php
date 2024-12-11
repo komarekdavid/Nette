@@ -32,7 +32,7 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 		extract($this->params);
 
 		if (!$this->getReferringTemplate() || $this->getReferenceType() === 'extends') {
-			foreach (array_intersect_key(['comment' => '21'], $this->params) as $ʟ_v => $ʟ_l) {
+			foreach (array_intersect_key(['comment' => '23'], $this->params) as $ʟ_v => $ʟ_l) {
 				trigger_error("Variable \$$ʟ_v overwritten in foreach on line $ʟ_l");
 			}
 		}
@@ -62,9 +62,17 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 <div class="post">';
 		echo LR\Filters::escapeHtmlText($post->content) /* line 9 */;
 		echo '</div>
+
+<img src="';
+		echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($basePath)) /* line 11 */;
+		echo '/';
+		echo LR\Filters::escapeHtmlAttr($post->image) /* line 11 */;
+		echo '" alt="Obrázek k článku ';
+		echo LR\Filters::escapeHtmlAttr($post->title) /* line 11 */;
+		echo ' neni k dispozici"><br>
  
 <a href="';
-		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 11 */;
+		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 13 */;
 		echo '">Upravit příspěvek</a>
 
  
@@ -73,34 +81,34 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 ';
 		$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 		if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-		$ʟ_tmp->render() /* line 16 */;
+		$ʟ_tmp->render() /* line 18 */;
 
 		echo '
 <h2>Komentáře</h2>
 
 <div class="comments">
 ';
-		foreach ($comments as $comment) /* line 21 */ {
+		foreach ($comments as $comment) /* line 23 */ {
 			echo '		<p><b>';
 			$ʟ_tag[0] = '';
-			if ($comment->email) /* line 22 */ {
+			if ($comment->email) /* line 24 */ {
 				echo '<';
-				echo $ʟ_tmp = 'a' /* line 22 */;
+				echo $ʟ_tmp = 'a' /* line 24 */;
 				$ʟ_tag[0] = '</' . $ʟ_tmp . '>' . $ʟ_tag[0];
 				echo ' href="mailto:';
-				echo LR\Filters::escapeHtmlAttr($comment->email) /* line 22 */;
+				echo LR\Filters::escapeHtmlAttr($comment->email) /* line 24 */;
 				echo '">';
 			}
 			echo '
 			';
-			echo LR\Filters::escapeHtmlText($comment->name) /* line 23 */;
+			echo LR\Filters::escapeHtmlText($comment->name) /* line 25 */;
 			echo '
 		';
 			echo $ʟ_tag[0];
 			echo '</b> napsal:</p>
 
 		<div>';
-			echo LR\Filters::escapeHtmlText($comment->content) /* line 26 */;
+			echo LR\Filters::escapeHtmlText($comment->content) /* line 28 */;
 			echo '</div>
 ';
 

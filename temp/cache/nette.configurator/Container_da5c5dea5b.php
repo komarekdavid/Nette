@@ -17,6 +17,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		'httpRequest' => 'http.request',
 		'httpResponse' => 'http.response',
 		'nette.authenticator' => 'security.authenticator',
+		'nette.cacheJournal' => 'cache.journal',
 		'nette.database.default' => 'database.default',
 		'nette.database.default.context' => 'database.default.explorer',
 		'nette.httpRequestFactory' => 'http.requestFactory',
@@ -34,6 +35,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		'Nette\Application\Application' => [['application.application']],
 		'Nette\Application\IPresenterFactory' => [['application.presenterFactory']],
 		'Nette\Application\LinkGenerator' => [['application.linkGenerator']],
+		'Nette\Caching\Storages\Journal' => [['cache.journal']],
 		'Nette\Caching\Storage' => [['cache.storage']],
 		'Nette\Database\Connection' => [['database.default.connection']],
 		'Nette\Database\IStructure' => [['database.default.structure']],
@@ -280,9 +282,18 @@ class Container_da5c5dea5b extends Nette\DI\Container
 	}
 
 
+	public function createServiceCache__journal(): Nette\Caching\Storages\Journal
+	{
+		return new Nette\Caching\Storages\SQLiteJournal('/home/david/github-classroom/ossp-cz/Nette/temp/cache/journal.s3db');
+	}
+
+
 	public function createServiceCache__storage(): Nette\Caching\Storage
 	{
-		return new Nette\Caching\Storages\FileStorage('/home/david/github-classroom/ossp-cz/Nette/temp/cache');
+		return new Nette\Caching\Storages\FileStorage(
+			'/home/david/github-classroom/ossp-cz/Nette/temp/cache',
+			$this->getService('cache.journal'),
+		);
 	}
 
 
@@ -297,7 +308,7 @@ class Container_da5c5dea5b extends Nette\DI\Container
 		$service = new Nette\Database\Connection(
 			'mysql:host=mysql.muj.cloud;dbname=school_PhTT7',
 			/*sensitive{*/'school_PhTT7'/*}*/,
-			/*sensitive{*/'heslo123'/*}*/,
+			/*sensitive{*/'rootroot'/*}*/,
 			[],
 		);
 		Nette\Bridges\DatabaseTracy\ConnectionPanel::initialize(

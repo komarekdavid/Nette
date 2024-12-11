@@ -19,17 +19,38 @@ final class EditPresenter extends Nette\Application\UI\Presenter
             ->setRequired();
         $form->addTextArea('content', 'Obsah:')
             ->setRequired();
+        $form->addUpload('image', 'Obrázek:')
+            ->setRequired('Prosím nahrajte obrázek.')
+            ->addRule(Form::IMAGE, 'Obrázek musí být ve formátu JPEG, PNG nebo GIF.');
 
         $form->addSubmit('send', 'Uložit a publikovat');
-        $form->onSuccess[] = $this->postFormSucceeded(...);
+        $form->onSuccess[] = [$this, 'postFormSucceeded'];
 
         return $form;
     }
 
-    private function postFormSucceeded(array $data): void
+    public function postFormSucceeded(Form $form, array $data): void
     {
         $id = $this->getParameter('id');
 
+        // Zpracování nahraného souboru
+        if ($data['image']->isOk() && $data['image']->isImage()) {
+            $imageName = $data['image']->getSanitizedName();
+            $imagePath = 'upload/' . $imageName;
+
+            try {
+                $data['image']->move($imagePath);
+                $data['image'] = $imagePath; // Uložení cesty do dat
+            } catch (Nette\Utils\ImageException $e) {
+                $this->flashMessage('Nepodařilo se nahrát obrázek.', 'error');
+                $this->redirect('this');
+            }
+        } else {
+            $this->flashMessage('Obrázek nebyl nahrán. Zkontrolujte formát souboru.', 'error');
+            $this->redirect('this');
+        }
+
+        // Uložení dat
         $post = $this->facade->savePost($data, $id);
 
         $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
@@ -56,7 +77,4 @@ final class EditPresenter extends Nette\Application\UI\Presenter
             $this->redirect('Sign:in');
         }
     }
-
-
-
 }
