@@ -32,7 +32,7 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 		extract($this->params);
 
 		if (!$this->getReferringTemplate() || $this->getReferenceType() === 'extends') {
-			foreach (array_intersect_key(['comment' => '23'], $this->params) as $ʟ_v => $ʟ_l) {
+			foreach (array_intersect_key(['comment' => '28'], $this->params) as $ʟ_v => $ʟ_l) {
 				trigger_error("Variable \$$ʟ_v overwritten in foreach on line $ʟ_l");
 			}
 		}
@@ -62,17 +62,26 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 <div class="post">';
 		echo LR\Filters::escapeHtmlText($post->content) /* line 9 */;
 		echo '</div>
-
-<img src="';
-		echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($basePath)) /* line 11 */;
-		echo '/';
-		echo LR\Filters::escapeHtmlAttr($post->image) /* line 11 */;
-		echo '" alt="Obrázek k článku ';
-		echo LR\Filters::escapeHtmlAttr($post->title) /* line 11 */;
-		echo ' neni k dispozici"><br>
  
+';
+		if ($post->image) /* line 11 */ {
+			echo '    <img src="';
+			echo LR\Filters::escapeHtmlAttr(LR\Filters::safeUrl($basePath)) /* line 12 */;
+			echo '/';
+			echo LR\Filters::escapeHtmlAttr($post->image) /* line 12 */;
+			echo '" alt="Obrázek k článku ';
+			echo LR\Filters::escapeHtmlAttr($post->title) /* line 12 */;
+			echo '"><br>
+    <a href="';
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('deleteImage!', [$post->id])) /* line 13 */;
+			echo '">Smazat obrázek</a>
+';
+		}
+		echo '
+
+
 <a href="';
-		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 13 */;
+		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 18 */;
 		echo '">Upravit příspěvek</a>
 
  
@@ -81,34 +90,34 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 ';
 		$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 		if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-		$ʟ_tmp->render() /* line 18 */;
+		$ʟ_tmp->render() /* line 23 */;
 
 		echo '
 <h2>Komentáře</h2>
 
 <div class="comments">
 ';
-		foreach ($comments as $comment) /* line 23 */ {
+		foreach ($comments as $comment) /* line 28 */ {
 			echo '		<p><b>';
 			$ʟ_tag[0] = '';
-			if ($comment->email) /* line 24 */ {
+			if ($comment->email) /* line 29 */ {
 				echo '<';
-				echo $ʟ_tmp = 'a' /* line 24 */;
+				echo $ʟ_tmp = 'a' /* line 29 */;
 				$ʟ_tag[0] = '</' . $ʟ_tmp . '>' . $ʟ_tag[0];
 				echo ' href="mailto:';
-				echo LR\Filters::escapeHtmlAttr($comment->email) /* line 24 */;
+				echo LR\Filters::escapeHtmlAttr($comment->email) /* line 29 */;
 				echo '">';
 			}
 			echo '
 			';
-			echo LR\Filters::escapeHtmlText($comment->name) /* line 25 */;
+			echo LR\Filters::escapeHtmlText($comment->name) /* line 30 */;
 			echo '
 		';
 			echo $ʟ_tag[0];
 			echo '</b> napsal:</p>
 
 		<div>';
-			echo LR\Filters::escapeHtmlText($comment->content) /* line 28 */;
+			echo LR\Filters::escapeHtmlText($comment->content) /* line 33 */;
 			echo '</div>
 ';
 

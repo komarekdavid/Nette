@@ -52,5 +52,16 @@ final class PostFacade
         ]);
     }
 
+    public function editPost(int $id, array $data): void
+    {
+        $post = $this->database->table('posts')->get($id);
+        if (!$post) {
+            throw new \RuntimeException('Příspěvek nebyl nalezen.');
+        }
+
+        $post->update($data);
+    }
+
+
     
 }

@@ -7,9 +7,14 @@
 <h1 n:block="title">{$post->title}</h1>
 
 <div class="post">{$post->content}</div>
-
-<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title} neni k dispozici"><br>
  
+{if $post->image}
+    <img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}"><br>
+    <a n:href="deleteImage! $post->id">Smazat obrázek</a>
+{/if}
+
+
+
 <a n:href="Edit:edit $post->id">Upravit příspěvek</a>
 
  

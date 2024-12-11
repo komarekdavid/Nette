@@ -51,4 +51,23 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Děkuji za komentář', 'success');
         $this->redirect('this');
     }
+
+    public function handleDeleteImage(int $postId): void
+    {
+        $post = $this->facade->getPostById($postId);
+
+        if ($post && $post['image']) {
+            if (file_exists($post['image'])) {
+                unlink($post['image']); // Smazání obrázku z disku
+            }
+
+            $data['image'] = null;
+            $this->facade->editPost($postId, $data); // Aktualizace databáze
+            $this->flashMessage('Obrázek byl úspěšně smazán.', 'success');
+        } else {
+            $this->flashMessage('Obrázek nebyl nalezen nebo již byl smazán.', 'error');
+        }
+
+        $this->redirect('this'); // Přesměrování na aktuální stránku
+    }
 }
