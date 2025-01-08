@@ -37,6 +37,16 @@ return array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Sign/SignPresenter.php',
       1 => 1732698913,
     ),
+    'App\\UI\\Game\\GamePresenter' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Game/GamePresenter.php',
+      1 => 1736334717,
+    ),
+    'App\\Model\\GameFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GameFacade.php',
+      1 => 1736334573,
+    ),
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',

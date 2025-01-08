@@ -1,0 +1,11 @@
+{block content}
+<h1 class="game-detail-header">Detail hry: {$game->name}</h1>
+
+<div class="game-detail">
+    <p class="game-detail-item"><strong>Název:</strong> {$game->name}</p>
+    <p class="game-detail-item"><strong>Popis:</strong></p>
+    <p class="game-detail-description">{$game->description}</p>
+</div>
+
+<a href="{link Game:list}" class="game-button game-back-button">Zpět na seznam</a>
+{/block}

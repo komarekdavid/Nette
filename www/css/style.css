@@ -193,3 +193,128 @@ body {
 .create-post-link:hover {
     background: #0056b3;
 }
+
+
+
+.game-header {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Tabulka */
+.game-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-table-header {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.game-row-header {
+    text-align: left;
+}
+
+.game-cell-header {
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Řádky tabulky */
+.game-table-body .game-row {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s;
+}
+
+.game-table-body .game-row:hover {
+    background-color: #f2f2f2;
+}
+
+.game-cell {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Tlačítka */
+.game-button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.game-detail-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.game-detail-button:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+
+/* Nadpis detailu */
+.game-detail-header {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Kontejner detailu hry */
+.game-detail {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+    color: #333;
+}
+
+.game-detail-item {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.game-detail-description {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Tlačítka */
+.game-button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.game-back-button {
+    background-color: #6c757d;
+    color: #fff;
+    text-align: center;
+    display: block;
+    max-width: 150px;
+    margin: 0 auto;
+}
+
+.game-back-button:hover {
+    background-color: #5a6268;
+    color: #fff;
+}

@@ -38,7 +38,9 @@
 
 				<div class="comment-content">{$comment->content}</div>
 
-				{if $user}
+
+
+				{if $user->isLoggedIn()}
 					<a n:href="deleteComment! $comment->id" class="delete-comment-link">Smazat komentář</a>
 				{/if}
 			</div>

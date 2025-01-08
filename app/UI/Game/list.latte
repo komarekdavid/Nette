@@ -1,0 +1,26 @@
+{block content}
+<h1 class="game-header">Seznam her</h1>
+
+<table class="game-table">
+    <thead class="game-table-header">
+        <tr class="game-row-header">
+            <th class="game-cell-header">#</th>
+            <th class="game-cell-header">Název</th>
+            <th class="game-cell-header">Popis</th>
+            <th class="game-cell-header">Akce</th>
+        </tr>
+    </thead>
+    <tbody class="game-table-body">
+        {foreach $games as $game}
+        <tr class="game-row">
+            <td class="game-cell">{$game->id}</td>
+            <td class="game-cell">{$game->name}</td>
+            <td class="game-cell">{$game->description|truncate:50}</td>
+            <td class="game-cell">
+                <a href="{link Game:description, $game->id}" class="game-button game-detail-button">Detail</a>
+            </td>
+        </tr>
+        {/foreach}
+    </tbody>
+</table>
+{/block}

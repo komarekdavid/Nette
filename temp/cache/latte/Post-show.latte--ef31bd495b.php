@@ -127,10 +127,12 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 			echo LR\Filters::escapeHtmlText($comment->content) /* line 39 */;
 			echo '</div>
 
+
+
 ';
-			if ($user) /* line 41 */ {
+			if ($user->isLoggedIn()) /* line 43 */ {
 				echo '					<a href="';
-				echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('deleteComment!', [$comment->id])) /* line 42 */;
+				echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('deleteComment!', [$comment->id])) /* line 44 */;
 				echo '" class="delete-comment-link">Smazat komentář</a>
 ';
 			}
@@ -147,7 +149,7 @@ final class Template_ef31bd495b extends Latte\Runtime\Template
 ';
 		$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 		if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-		$ʟ_tmp->render() /* line 51 */;
+		$ʟ_tmp->render() /* line 53 */;
 
 		echo '</div>
 
