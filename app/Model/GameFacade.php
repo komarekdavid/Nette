@@ -23,4 +23,21 @@ final class GameFacade
     {
         return $this->database->table('games')->get($id);
     }
+
+    public function createGame(array $data)
+    {
+        $this->database->table('games')->insert($data);
+    }
+
+    public function deleteGame(int $id)
+    {
+        $this->database->table('games')->get($id)->delete();
+    }
+
+    public function updateGame(int $id, array $data)
+    {
+        $this->database->table('games')->where('id', $id)->update($data);
+    }
 }
+
+
