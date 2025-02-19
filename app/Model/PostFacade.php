@@ -10,11 +10,11 @@ final class PostFacade
     ) {
     }
 
-    public function getPublicArticles()
+    public function getPosts()
     {
-        return $this->database
-            ->table('posts')
-            ->order('created_at DESC');
+        return $this->database->table('posts')
+            ->order('created_at DESC')
+            ->fetchAll();
     }
 
     public function getPostById(int $id)
@@ -22,49 +22,43 @@ final class PostFacade
         return $this->database->table('posts')->get($id);
     }
 
-    public function savePost(array $data, ?int $id = null)
+    public function addPost(string $title, string $content, int $category_id, ?string $image = null): void
     {
-        if ($id) {
-            $post = $this->database->table('posts')->get($id);
-            $post->update($data);
-        } else {
-            $post = $this->database->table('posts')->insert($data);
-        }
-
-        return $post;
-    }
-
-    public function getCommentsForPost(int $postId)
-    {
-        return $this->database
-            ->table('comments')
-            ->where('post_id', $postId)
-            ->order('created_at');
-    }
-
-    public function addComment(int $postId, string $name, ?string $email, string $content): void
-    {
-        $this->database->table('comments')->insert([
-            'post_id' => $postId,
-            'name' => $name,
-            'email' => $email,
+        $this->database->table('posts')->insert([
+            'title' => $title,
             'content' => $content,
+            'category_id' => $category_id,
+            'image' => $image,
+            'created_at' => new \DateTime(),
         ]);
     }
 
-    public function getCommentById(int $commentId)
+    public function updatePost(int $id, string $title, string $content, int $category_id, ?string $image = null): void
     {
-        return $this->database->table('comments')->get($commentId);
-    }
+        $data = [
+            'title' => $title,
+            'content' => $content,
+            'category_id' => $category_id,
+        ];
 
-    public function deleteComment(int $commentId): void
-    {
-        $comment = $this->database->table('comments')->get($commentId);
-        if ($comment) {
-            $comment->delete();
+        if ($image !== null) {
+            $data['image'] = $image;
         }
-    }
-    
 
-    
+        $this->database->table('posts')->where('id', $id)->update($data);
+    }
+
+    public function deletePost(int $id): void
+    {
+        $this->database->table('posts')->where('id', $id)->delete();
+    }
+
+    public function getPublicArticles()
+    {
+        return $this->database->table('posts')
+            ->where('category_id IS NOT NULL')  
+            ->order('created_at DESC')
+            ->fetchAll();
+    }
+
 }

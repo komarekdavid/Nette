@@ -2,6 +2,8 @@
 namespace App\UI\Home;
 
 use App\Model\PostFacade;
+use App\Model\CategoryFacade;
+use App\Model\GameFacade;
 use Nette;
 
 final class HomePresenter extends Nette\Application\UI\Presenter
@@ -16,4 +18,5 @@ final class HomePresenter extends Nette\Application\UI\Presenter
         $this->template->posts = $this->facade
             ->getPublicArticles();
     }
+
 }

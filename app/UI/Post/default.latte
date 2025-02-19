@@ -1,0 +1,25 @@
+{block content}
+    <h1 class="post-title">Seznam příspěvků</h1>
+
+    <a n:href="create" class="post-button">Přidat nový příspěvek</a>
+
+    <div class="post-list">
+        {foreach $posts as $post}
+            <div class="post-item">
+                <h2><a n:href="show, id => $post['id']">{$post['title']}</a></h2>
+                <p class="post-category">Kategorie: {$post['category_name']}</p>
+                <p class="post-excerpt">
+                    {if strlen($post['content']) > 25}
+                        {=substr($post['content'], 0, 25)}...
+                    {else}
+                        {$post['content']}
+                    {/if}
+                </p>
+                {ifset $post['image']}
+                    <img src="{$post['image']}" class="post-image" alt="Obrázek">
+                {/ifset}
+                <p><a n:href="show, id => $post['id']" class="post-read-more">Číst více</a></p>
+            </div>
+        {/foreach}
+    </div>
+{/block}

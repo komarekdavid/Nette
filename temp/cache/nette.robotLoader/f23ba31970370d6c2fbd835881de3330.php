@@ -17,20 +17,20 @@ return array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Accessory/LatteExtension.php',
       1 => 1723174486,
     ),
-    'App\\UI\\Edit\\EditPresenter' => 
+    'App\\UI\\Category\\CategoryPresenter' => 
     array (
-      0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Edit/EditPresenter.php',
-      1 => 1738148040,
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Category/CategoryPresenter.php',
+      1 => 1739962493,
     ),
     'App\\UI\\Home\\HomePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Home/HomePresenter.php',
-      1 => 1732697374,
+      1 => 1738153094,
     ),
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1733917094,
+      1 => 1739962733,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (
@@ -40,7 +40,7 @@ return array (
     'App\\UI\\Game\\GamePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Game/GamePresenter.php',
-      1 => 1738148258,
+      1 => 1738148416,
     ),
     'App\\Model\\GameFacade' => 
     array (
@@ -50,7 +50,12 @@ return array (
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1733917124,
+      1 => 1739959056,
+    ),
+    'App\\Model\\CategoryFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/CategoryFacade.php',
+      1 => 1739962610,
     ),
     'App\\Bootstrap' => 
     array (
@@ -85,6 +90,17 @@ return array (
     'App\\UI\\Game\\GameDescriptionTemplate' => 3,
     'App\\UI\\Game\\GameCreateTemplate' => 3,
     'App\\UI\\Game\\GameEditTemplate' => 3,
+    'App\\UI\\Category\\CategoryDefaultTemplate' => 3,
+    'App\\UI\\Category\\CategoryTemplate' => 3,
+    'App\\UI\\Category\\CategoryCreateTemplate' => 2,
+    'App\\UI\\Category\\CategoryEditTemplate' => 3,
+    'App\\UI\\Edit\\EditPresenter' => 3,
+    'App\\UI\\Post\\PostCreateTemplate' => 3,
+    'App\\UI\\Post\\PostDefaultTemplate' => 3,
+    'App\\UI\\Post\\PostUploadsTemplate' => 3,
+    'App\\UI\\Post\\PostUploadTemplate' => 3,
+    'App\\UI\\Posts\\PostsPresenter' => 1,
+    'App\\UI\\Post\\PostEditTemplate' => 3,
   ),
   2 => 
   array (

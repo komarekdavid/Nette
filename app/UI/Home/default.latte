@@ -1,27 +1,6 @@
 {block content}
-    <h1>Můj blog</h1>
+<div class='home-conatiner'>    
+    <h1 class="home-title">Vítejte v Nette!</h1>
+</div>
 
-    <div class="post-list">
-        <div n:foreach="$posts as $post" class="post">
-            <div class="post-meta">
-                <span class="date">{$post->created_at|date:'F j, Y'}</span>
-            </div>
-
-            <h2 class="post-title">
-                <a href="{link Post:show $post->id}">{$post->title}</a>
-            </h2>
-
-            <div class="post-image">
-                {if $post->image}
-                    <img src="{$basePath}/{$post->image}" alt="Obrázek příspěvku" class="image">
-                {else}
-                    <img src="{$basePath}/upload/image.png" alt="Výchozí obrázek" class="image-default">
-                {/if}
-            </div>
-
-            <div class="post-content">{$post->content|truncate:256}</div>
-        </div>
-    </div>
-
-    <a n:href="Edit:create" n:if="$user->isLoggedIn()" class="create-post-link">Vytvořit příspěvek</a>
 {/block}

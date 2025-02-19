@@ -1,0 +1,28 @@
+{block content}
+<h1 class="category-title">Seznam kategorií</h1>
+
+<a n:href="create" class="category-button">Přidat novou kategorii</a>
+
+<table class="category-table">
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>Popis</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $categories as $category}
+            <tr>
+                <td>{$category->name}</td>
+                <td>{$category->description}</td>
+                <td>
+                    <a n:href="edit, id => $category->id" class="category-edit">Upravit</a>
+                    <a n:href="delete!, id => $category->id" class="category-delete" onclick="return confirm('Opravdu chcete smazat tuto kategorii?')">Smazat</a>
+                </td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+{/block}
+    
