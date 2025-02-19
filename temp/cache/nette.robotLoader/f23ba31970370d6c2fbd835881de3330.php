@@ -30,7 +30,7 @@ return array (
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1739962733,
+      1 => 1739962748,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (
@@ -70,37 +70,14 @@ return array (
   ),
   1 => 
   array (
-    'null' => 3,
-    'App\\UI\\Home\\HomeDefaultTemplate' => 3,
-    'App\\UI\\Home\\HomeTemplate' => 3,
-    'App\\UI\\Post\\PostShowTemplate' => 3,
+    'null' => 1,
+    'App\\UI\\Post\\PostShowTemplate' => 1,
     'App\\UI\\Post\\PostTemplate' => 3,
-    'App\\UI\\Edit\\EditEditTemplate' => 3,
-    'App\\UI\\Edit\\EditTemplate' => 3,
-    'App\\UI\\Post\\Nette\\Application\\UI\\Presenter' => 1,
-    'App\\UI\\Sign\\SignInTemplate' => 3,
-    'App\\UI\\Sign\\SignTemplate' => 3,
-    'App\\UI\\Edit\\EditCreateTemplate' => 3,
-    'App\\UI\\Sign\\SignOutTemplate' => 3,
-    'App\\UI\\Post\\PostDeleteCommentTemplate' => 3,
-    'App\\Model\\CommentService' => 3,
-    'App\\UI\\Game\\GameDefaultTemplate' => 3,
-    'App\\UI\\Game\\GameTemplate' => 3,
-    'App\\UI\\Game\\GameListTemplate' => 3,
-    'App\\UI\\Game\\GameDescriptionTemplate' => 3,
-    'App\\UI\\Game\\GameCreateTemplate' => 3,
-    'App\\UI\\Game\\GameEditTemplate' => 3,
-    'App\\UI\\Category\\CategoryDefaultTemplate' => 3,
-    'App\\UI\\Category\\CategoryTemplate' => 3,
-    'App\\UI\\Category\\CategoryCreateTemplate' => 2,
-    'App\\UI\\Category\\CategoryEditTemplate' => 3,
-    'App\\UI\\Edit\\EditPresenter' => 3,
-    'App\\UI\\Post\\PostCreateTemplate' => 3,
-    'App\\UI\\Post\\PostDefaultTemplate' => 3,
-    'App\\UI\\Post\\PostUploadsTemplate' => 3,
-    'App\\UI\\Post\\PostUploadTemplate' => 3,
-    'App\\UI\\Posts\\PostsPresenter' => 1,
-    'App\\UI\\Post\\PostEditTemplate' => 3,
+    'App\\UI\\Post\\PostDefaultTemplate' => 2,
+    'App\\UI\\Category\\CategoryDefaultTemplate' => 2,
+    'App\\UI\\Category\\CategoryTemplate' => 2,
+    'App\\UI\\Game\\GameListTemplate' => 2,
+    'App\\UI\\Game\\GameTemplate' => 2,
   ),
   2 => 
   array (
