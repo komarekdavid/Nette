@@ -11,27 +11,37 @@ final class GameFacade
     ) {
     }
 
-    public function getGames()
+    public function getGamesWithGenres()
     {
-        return $this->database
-            ->table('games')
-            ->order('created_at DESC')
-            ->fetchAll();
+        return $this->database->query('
+            SELECT games.*, genres.name AS genre_name
+            FROM games
+            LEFT JOIN genres ON genres.id = games.genre_id
+            ORDER BY games.created_at DESC
+        ')->fetchAll();
     }
-
+    
+    
     public function getGameById(int $id)
     {
-        return $this->database->table('games')->get($id);
+        return $this->database->query('
+            SELECT games.*, genres.name AS genre_name
+            FROM games
+            LEFT JOIN genres ON genres.id = games.genre_id
+            WHERE games.id = ?
+        ', $id)->fetch();
     }
+    
+    
 
     public function createGame(array $data)
     {
         $this->database->table('games')->insert($data);
     }
 
-    public function deleteGame(int $id)
+    public function deleteGame(int $id): void
     {
-        $this->database->table('games')->get($id)->delete();
+        $this->database->table('games')->where('id', $id)->delete();
     }
 
     public function updateGame(int $id, array $data)
@@ -39,5 +49,3 @@ final class GameFacade
         $this->database->table('games')->where('id', $id)->update($data);
     }
 }
-
-

@@ -2,6 +2,11 @@
 return array (
   0 => 
   array (
+    'App\\UI\\Genre\\GenrePresenter' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Genre/GenrePresenter.php',
+      1 => 1740563423,
+    ),
     'App\\UI\\Error\\Error4xx\\Error4xxPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Error/Error4xx/Error4xxPresenter.php',
@@ -40,12 +45,12 @@ return array (
     'App\\UI\\Game\\GamePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Game/GamePresenter.php',
-      1 => 1738148416,
+      1 => 1740565408,
     ),
     'App\\Model\\GameFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GameFacade.php',
-      1 => 1738148295,
+      1 => 1740565088,
     ),
     'App\\Model\\PostFacade' => 
     array (
@@ -56,6 +61,11 @@ return array (
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/CategoryFacade.php',
       1 => 1739962610,
+    ),
+    'App\\Model\\GenreFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GenreFacade.php',
+      1 => 1740561589,
     ),
     'App\\Bootstrap' => 
     array (
@@ -70,14 +80,28 @@ return array (
   ),
   1 => 
   array (
-    'null' => 1,
-    'App\\UI\\Post\\PostShowTemplate' => 1,
+    'null' => 3,
+    'App\\UI\\Post\\PostShowTemplate' => 3,
     'App\\UI\\Post\\PostTemplate' => 3,
-    'App\\UI\\Post\\PostDefaultTemplate' => 2,
-    'App\\UI\\Category\\CategoryDefaultTemplate' => 2,
-    'App\\UI\\Category\\CategoryTemplate' => 2,
-    'App\\UI\\Game\\GameListTemplate' => 2,
-    'App\\UI\\Game\\GameTemplate' => 2,
+    'App\\UI\\Post\\PostDefaultTemplate' => 3,
+    'App\\UI\\Category\\CategoryDefaultTemplate' => 3,
+    'App\\UI\\Category\\CategoryTemplate' => 3,
+    'App\\UI\\Game\\GameListTemplate' => 3,
+    'App\\UI\\Game\\GameTemplate' => 3,
+    'App\\UI\\Home\\HomeDefaultTemplate' => 3,
+    'App\\UI\\Home\\HomeTemplate' => 3,
+    'App\\UI\\Genre\\GenreDefaultTemplate' => 3,
+    'App\\UI\\Genre\\GenreTemplate' => 3,
+    'App\\UI\\Genre\\GenreCreateTemplate' => 2,
+    'App\\UI\\Genre\\GenreEditTemplate' => 3,
+    'App\\UI\\Genre\\GenreDeleteTemplate' => 3,
+    'App\\UI\\Game\\GameDescriptionTemplate' => 3,
+    'App\\UI\\Game\\GameEditTemplate' => 3,
+    'App\\UI\\Sign\\SignInTemplate' => 1,
+    'App\\UI\\Sign\\SignTemplate' => 1,
+    'App\\UI\\Game\\GameCreateTemplate' => 2,
+    'App\\UI\\Game\\GameDeleteGameTemplate' => 2,
+    'App\\UI\\Game\\GameDeleteTemplate' => 1,
   ),
   2 => 
   array (

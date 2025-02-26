@@ -3,17 +3,20 @@
 namespace App\UI\Game;
 
 use App\Model\GameFacade;
+use App\Model\GenreFacade;
 use Nette;
 
 final class GamePresenter extends Nette\Application\UI\Presenter
 {
-
     private ?int $editingGameId = null;
+    private GameFacade $gameFacade;
+    private GenreFacade $genreFacade;
 
-    
-    public function __construct(
-        private GameFacade $facade,
-    ) {
+    public function __construct(GameFacade $gameFacade, GenreFacade $genreFacade)
+    {
+        parent::__construct();
+        $this->gameFacade = $gameFacade;
+        $this->genreFacade = $genreFacade;
     }
 
     public function renderDefault(): void
@@ -21,25 +24,23 @@ final class GamePresenter extends Nette\Application\UI\Presenter
         $this->redirect('list');
     }
 
-
     public function renderList(): void
     {
-        $this->template->games = $this->facade->getGames();
+        $this->template->games = $this->gameFacade->getGamesWithGenres();
     }
 
     public function renderDescription(int $id): void
     {
-        $game = $this->facade->getGameById($id);
+        $game = $this->gameFacade->getGameById($id);
         if (!$game) {
             $this->error('Hra nebyla nalezena.');
         }
-
         $this->template->game = $game;
     }
 
     public function renderCreate(): void
     {
-
+        $this->template->genres = $this->genreFacade->getGenresName();
     }
 
     public function createComponentGameForm(): Nette\Application\UI\Form
@@ -51,48 +52,37 @@ final class GamePresenter extends Nette\Application\UI\Presenter
 
         $form->addTextArea('description', 'Popis:')
             ->setRequired('Zadejte popis hry.');
+        
+        $form->addSelect('genre_id', 'Žánr:', $this->genreFacade->getGenresName())
+            ->setPrompt('Vyberte žánr')
+            ->setRequired('Vyberte žánr hry.');
 
         $form->addSubmit('send', 'Uložit');
 
         $form->onSuccess[] = function (Nette\Application\UI\Form $form, \stdClass $values): void {
+            $data = [
+                'name' => $values->name,
+                'description' => $values->description,
+                'genre_id' => $values->genre_id,
+            ];
+            
             if ($this->editingGameId) {
-                $this->facade->updateGame($this->editingGameId, (array) $values);
+                $this->gameFacade->updateGame($this->editingGameId, $data);
                 $this->flashMessage('Hra byla úspěšně upravena.', 'success');
-                $this->redirect('Game:list');
             } else {
-                $data = [
-                    'name' => $values->name,
-                    'description' => $values->description,
-                    'created_at' => new \DateTime(),
-                ];
-                $this->facade->createGame($data);
+                $this->gameFacade->createGame($data);
                 $this->flashMessage('Hra byla úspěšně vytvořena.', 'success');
-                $this->redirect('Game:list');
             }
+            
+            $this->redirect('Game:list');
         };
 
         return $form;
     }
 
-
-
-    public function handleDeleteGame(int $id): void
-    {
-        $game = $this->facade->getGameById($id);
-
-        if ($game) {
-            $this->facade->deleteGame($id);
-            $this->flashMessage('Hra byla úspěšně smazána.', 'success');
-        } else {
-            $this->flashMessage('Hra nebyla nalezena nebo již byla smazána.', 'error');
-        }
-
-        $this->redirect('Game:list');
-    }
-
     public function renderEdit(int $id): void
     {
-        $game = $this->facade->getGameById($id);
+        $game = $this->gameFacade->getGameById($id);
         if (!$game) {
             $this->error('Hra nebyla nalezena.');
         }
@@ -101,14 +91,17 @@ final class GamePresenter extends Nette\Application\UI\Presenter
         $this['gameForm']->setDefaults([
             'name' => $game->name,
             'description' => $game->description,
+            'genre_id' => $game->genre_id,
         ]);
 
         $this->template->game = $game;
+        $this->template->genres = $this->genreFacade->getGenresName();
     }
 
-    
-
-
-
-
+    public function actionDelete(int $id): void
+    {
+        $this->gameFacade->deleteGame($id);
+        $this->flashMessage('Hra byla úspěšně smazána.', 'success');
+        $this->redirect('Game:list');
+    }
 }

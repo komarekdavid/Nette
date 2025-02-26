@@ -2,6 +2,11 @@
 return array (
   0 => 
   array (
+    'App\\UI\\Genre\\GenrePresenter' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Genre/GenrePresenter.php',
+      1 => 1740563423,
+    ),
     'App\\UI\\Error\\Error4xx\\Error4xxPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Error/Error4xx/Error4xxPresenter.php',
@@ -40,12 +45,12 @@ return array (
     'App\\UI\\Game\\GamePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Game/GamePresenter.php',
-      1 => 1738148416,
+      1 => 1740565408,
     ),
     'App\\Model\\GameFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GameFacade.php',
-      1 => 1738148295,
+      1 => 1740565088,
     ),
     'App\\Model\\PostFacade' => 
     array (
@@ -56,6 +61,11 @@ return array (
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/CategoryFacade.php',
       1 => 1739962610,
+    ),
+    'App\\Model\\GenreFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GenreFacade.php',
+      1 => 1740561589,
     ),
     'App\\Bootstrap' => 
     array (

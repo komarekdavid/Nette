@@ -1,0 +1,25 @@
+{block content}
+    <h1>Seznam žánrů</h1>
+    <a n:href="Genre:create" class="btn btn-primary">Přidat nový žánr</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Název</th>
+                <th>Akce</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $genres as $genre}
+                <tr>
+                    <td>{$genre->id}</td>
+                    <td>{$genre->name}</td>
+                    <td>
+                        <a n:href="Genre:edit, id => $genre->id" class="btn btn-warning">Upravit</a>
+                        <a n:href="Genre:delete, id => $genre->id" class="btn btn-danger" onclick="return confirm('Opravdu chcete smazat tento žánr?')">Smazat</a>
+                    </td>
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+{/block}

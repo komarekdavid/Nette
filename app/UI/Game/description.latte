@@ -3,11 +3,13 @@
 
 <div class="game-detail">
     <p class="game-detail-item"><strong>Název:</strong> {$game->name}</p>
+    <p class="game-detail-item"><strong>Žánr:</strong> {$game->genre_name}</p>
     <p class="game-detail-item"><strong>Popis:</strong></p>
     <p class="game-detail-description">{$game->description}</p>
 </div>
 
 <a href="{link Game:list}" class="game-button game-back-button">Zpět na seznam</a>
 <a n:href="Game:edit id => $game->id">Upravit</a>
-<a n:href="deleteGame! $game->id" class="game-button game-delete-button">Smazat</a>
+<a n:href="Game:delete id => $game->id" class="game-button game-delete-button">Smazat</a>
+
 {/block}
