@@ -35,7 +35,7 @@ return array (
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1739962748,
+      1 => 1740568373,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (
@@ -55,7 +55,7 @@ return array (
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1739959056,
+      1 => 1740568285,
     ),
     'App\\Model\\CategoryFacade' => 
     array (

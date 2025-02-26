@@ -2,14 +2,24 @@
     <h1>{$post['title']}</h1>
     <p class="post-category">Kategorie: {$post['category_name']}</p>
     
-    {ifset $post['image']}
-        <img src="/{$post['image']}" alt="{$post['title']}" class="post-image" />
-    {/ifset}
+    {snippet image}
+        {ifset $post['image']}
+            <img src="/{$post['image']}" alt="{$post['title']}" class="post-image" />
+        {/ifset}
+    {/snippet}
 
     <p>{$post['content']}</p>
 
     <div class="post-actions">
         <a n:href="edit, id => $post['id']" class="post-edit">Upravit</a>
+        {snippet imagebutton}
+            {if isset($post['image']) && $post['image']}
+                <div id="image">
+                    <a n:href="deleteImage! $post['id']" class="delete-image-button ajax" data-nette-ajax="true">🗑️ Smazat obrázek</a>
+                </div>
+            {/if}
+        {/snippet}
+
         <a n:href="delete!, id => $post['id']" class="post-delete" onclick="return confirm('Opravdu chcete smazat tento příspěvek?')">Smazat</a>
         <a href="{link Post:default}" class="post-back">Zpět</a>
     </div>

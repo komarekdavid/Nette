@@ -61,4 +61,9 @@ final class PostFacade
             ->fetchAll();
     }
 
+    public function deleteImage(int $id): void
+    {
+        $this->database->table('posts')->where('id', $id)->update(['image' => null]);
+    }
+
 }

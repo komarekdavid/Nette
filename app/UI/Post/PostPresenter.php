@@ -25,6 +25,7 @@ final class PostPresenter extends Nette\Application\UI\Presenter
                 'id' => $post->id,
                 'title' => $post->title,
                 'content' => $post->content,
+                'image' => $post->image,
                 'category_id' => $post->category_id,
                 'category_name' => $this->categoryFacade->getCategoryNameById($post->category_id),
             ];
@@ -60,6 +61,7 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     
         $this->template->post = $postData;
     }
+    
     
 
     public function renderCreate(): void
@@ -139,4 +141,19 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Příspěvek byl odstraněn.', 'success');
         $this->redirect('default');
     }
+
+    public function handleDeleteImage(int $id): void
+    {
+        $this->postFacade->deleteImage($id);
+        $this->flashMessage('Obrázek byl odstraněn.', 'success');
+        if ($this->isAjax()) {
+            $this->redrawControl('image');
+            $this->redrawControl('imagebutton');
+        } else {
+            $this->redirect('Post:show', $id);
+        }
+    }
+    
+
+
 }
