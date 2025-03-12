@@ -2,6 +2,16 @@
 <h1 class="game-header">Seznam her</h1>
 <a n:href="Game:create" n:if="$user->isLoggedIn()" class="create-post-link">Vytvořit příspěvek</a>
 
+<form method="get" action="{link this}">
+    <select name="genre">
+        <option value="">Všechny žánry</option>
+        {foreach $genres as $genre}
+            <option value="{$genre->id}" n:if="$selectedGenre == $genre->id" selected>{$genre->name}</option>
+            <option value="{$genre->id}" n:if="$selectedGenre != $genre->id">{$genre->name}</option>
+        {/foreach}
+    </select>
+    <button type="submit">Filtrovat</button>
+</form>
 
 <table class="game-table">
     <thead class="game-table-header">

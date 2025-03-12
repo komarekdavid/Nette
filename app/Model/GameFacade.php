@@ -31,6 +31,19 @@ final class GameFacade
             WHERE games.id = ?
         ', $id)->fetch();
     }
+
+    public function getGamesByGenre(int $genreId)
+    {
+        return $this->database->query("
+            SELECT games.*, genres.name AS genre_name
+            FROM games
+            LEFT JOIN genres ON genres.id = games.genre_id
+            WHERE games.genre_id = ?
+        ", $genreId)->fetchAll();
+    }
+    
+    
+
     
     
 

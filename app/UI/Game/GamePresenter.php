@@ -24,10 +24,18 @@ final class GamePresenter extends Nette\Application\UI\Presenter
         $this->redirect('list');
     }
 
-    public function renderList(): void
+    public function renderList(?int $genre = null): void
     {
-        $this->template->games = $this->gameFacade->getGamesWithGenres();
+        $this->template->genres = $this->genreFacade->getGenres();
+        $this->template->selectedGenre = $genre;
+    
+        if ($genre) {
+            $this->template->games = $this->gameFacade->getGamesByGenre($genre);
+        } else {
+            $this->template->games = $this->gameFacade->getGamesWithGenres();
+        }
     }
+    
 
     public function renderDescription(int $id): void
     {
