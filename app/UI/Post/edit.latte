@@ -2,9 +2,51 @@
     <h1 class="post-title">Upravit příspěvek: {$post['title']}</h1>
     <p class="post-category">Kategorie: {$post['category_name']}</p>
 
+    {form postForm}
     
-    {control postForm}
+    <div class="form-group">
+        <label for="title">Název:</label>
+        <input type="text" name="title" id="title" value="{$post['title']}" required>
+    </div>
 
-        
+    <div class="form-group">
+        <label for="content">Obsah:</label>
+        <textarea name="content" id="content" required>{$post['content']}</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="category_id">Kategorie:</label>
+        <select name="category_id" id="category_id" required>
+            <option value="">Vyber kategorii</option>
+            {foreach $categories as $category}
+                <option value="{$category->id}" {if $category->id === $post['category_id']}selected{/if}>
+                    {$category->name}
+                </option>
+            {/foreach}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="image">Obrázek:</label>
+        <input type="file" name="image" id="image">
+        {if $post['image']}
+            <img src="{$post['image']}" alt="Příspěvek obrázek" class="post-image">
+        {/if}
+    </div>
+
+    <div class="form-group">
+        <label for="status">Status:</label>
+        <select name="status" id="status" required>
+            <option value="OPEN" {if $post['status'] === 'OPEN'}selected{/if}>Open</option>
+            <option value="CLOSED" {if $post['status'] === 'CLOSED'}selected{/if}>Published</option>
+            <option value="ARCHIVED" {if $post['status'] === 'ARCHIVED'}selected{/if}>Archived</option>
+        </select>
+    </div>
+
+    <button type="submit" class="post-button">Uložit</button>
+
     <a n:href="default" class="post-button">Zpět na seznam</a>
+
+    {/form}
+    
 {/block}

@@ -35,7 +35,7 @@ return array (
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1742379785,
+      1 => 1742383217,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (
@@ -52,10 +52,15 @@ return array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GameFacade.php',
       1 => 1741774759,
     ),
+    'App\\Model\\CommentFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/CommentFacade.php',
+      1 => 1742381554,
+    ),
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1742379745,
+      1 => 1742383280,
     ),
     'App\\Model\\CategoryFacade' => 
     array (
@@ -80,7 +85,7 @@ return array (
   ),
   1 => 
   array (
-    'null' => 2,
+    'null' => 3,
     'App\\UI\\Post\\PostDefaultTemplate' => 3,
     'App\\UI\\Post\\PostTemplate' => 3,
     'App\\UI\\Genre\\GenreDefaultTemplate' => 1,
@@ -93,11 +98,13 @@ return array (
     'App\\UI\\Category\\CategoryTemplate' => 1,
     'App\\UI\\Sign\\SignInTemplate' => 3,
     'App\\UI\\Sign\\SignTemplate' => 3,
-    'App\\UI\\Home\\HomeDefaultTemplate' => 2,
-    'App\\UI\\Home\\HomeTemplate' => 2,
+    'App\\UI\\Home\\HomeDefaultTemplate' => 3,
+    'App\\UI\\Home\\HomeTemplate' => 3,
     'App\\UI\\Post\\PostShowTemplate' => 3,
-    'App\\UI\\Post\\PostCreateTemplate' => 2,
+    'App\\UI\\Post\\PostCreateTemplate' => 3,
     'App\\UI\\Post\\PostUploadsTemplate' => 3,
+    'App\\UI\\Sign\\SignOutTemplate' => 2,
+    'App\\UI\\Post\\PostEditTemplate' => 3,
   ),
   2 => 
   array (

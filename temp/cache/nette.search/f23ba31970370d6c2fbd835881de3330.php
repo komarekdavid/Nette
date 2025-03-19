@@ -35,7 +35,7 @@ return array (
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1742379785,
+      1 => 1742383217,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (
@@ -52,10 +52,15 @@ return array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/GameFacade.php',
       1 => 1741774759,
     ),
+    'App\\Model\\CommentFacade' => 
+    array (
+      0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/CommentFacade.php',
+      1 => 1742381554,
+    ),
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/Model/PostFacade.php',
-      1 => 1742379745,
+      1 => 1742383280,
     ),
     'App\\Model\\CategoryFacade' => 
     array (

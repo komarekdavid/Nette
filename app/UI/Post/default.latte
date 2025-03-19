@@ -8,7 +8,16 @@
             <div class="post-item">
                 <h2><a n:href="show, id => $post['id']">{$post['title']}</a></h2>
                 <p class="post-category">Kategorie: {$post['category_name']}</p>
-                
+                    <p>Status: 
+                        {if $post['status'] === 'CLOSED'}
+                            <span class="status-label draft">🗑️ Uzavřený</span>
+                        {elseif $post['status'] === 'OPEN'}
+                            <span class="status-label published">✅ Publikovaný</span>
+                        {elseif $post['status'] === 'ARCHIVED'}
+                            <span class="status-label archived">📦 Archivováno</span>
+                        {/if}
+                    </p>
+                                
 
                 <p class="post-excerpt">
                     {if strlen($post['content']) > 25}

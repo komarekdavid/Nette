@@ -3,6 +3,7 @@ namespace App\UI\Post;
 
 use App\Model\PostFacade;
 use App\Model\CategoryFacade;
+use App\Model\CommentFacade;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Http\FileUpload;
@@ -12,29 +13,32 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     public function __construct(
         private PostFacade $postFacade,
         private CategoryFacade $categoryFacade,
+        private CommentFacade $commentFacade,
     ) {
     }
+
+
+    protected function beforeRender(): void
+    {
+        $this->template->addFilter('nl2br', function ($s) {
+            return nl2br($s);
+        });
+    }
+
+    
+
 
     public function renderDefault(): void
     {
         $posts = $this->postFacade->getPosts();
         $postList = [];
-    
+
         foreach ($posts as $post) {
-            $postList[] = [
-                'id' => $post->id,
-                'title' => $post->title,
-                'content' => $post->content,
-                'image' => $post->image,
-                'category_id' => $post->category_id,
-                'category_name' => $this->categoryFacade->getCategoryNameById($post->category_id),
-            ];
+            $postList[] = $this->getPostData($post); // Refactor to use helper function
         }
-    
+
         $this->template->posts = $postList;
     }
-    
-    
 
     public function renderEdit(int $id): void
     {
@@ -42,6 +46,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         if (!$post) {
             $this->error('Příspěvek nebyl nalezen');
         }
+    
+        // Pass categories to the template
+        $this->template->categories = $this->categoryFacade->getCategories();
     
         // Předání výchozích hodnot do formuláře
         $this['postForm']->setDefaults([
@@ -51,23 +58,11 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         ]);
     
         // Převod $post na pole a přidání category_name
-        $postData = [
-            'id' => $post->id,
-            'title' => $post->title,
-            'content' => $post->content,
-            'category_id' => $post->category_id,
-            'category_name' => $this->categoryFacade->getCategoryNameById($post->category_id),
-        ];
+        $postData = $this->getPostData($post);
     
         $this->template->post = $postData;
     }
     
-    
-
-    public function renderCreate(): void
-    {
-        $this->template->categories = $this->categoryFacade->getCategories();
-    }
 
     public function renderShow(int $id): void
     {
@@ -77,39 +72,62 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             $this->error('Příspěvek nebyl nalezen');
         }
     
-        // Zvýšení počtu zobrazení
+        // Check status for ARCHIVED posts
+        if ($post->status === 'ARCHIVED' && !$this->getUser()->isLoggedIn()) {
+            $this->flashMessage('Tento příspěvek je archivovaný a přístupný pouze přihlášeným uživatelům.', 'error');
+            $this->redirect('Homepage:');
+        }
+    
+        // Increment views count
         $this->postFacade->incrementViews($id);
     
-        // Přidání názvu kategorie k postu
-        $postData = [
+        // Load comments only if not archived
+        $comments = ($post->status !== 'ARCHIVED') ? $this->commentFacade->getCommentsByPost($id) : [];
+    
+        // Pass data to the template
+        $this->template->post = $this->getPostData($post);
+        $this->template->comments = $comments;
+    }
+    
+
+    private function getPostData($post): array
+    {
+        return [
             'id' => $post->id,
             'title' => $post->title,
             'content' => $post->content,
             'image' => $post->image,
             'category_id' => $post->category_id,
             'category_name' => $this->categoryFacade->getCategoryNameById($post->category_id),
-            'views_count' => $post->views_count + 1, // Aktualizace v šabloně
+            'views_count' => $post->views_count,
+            'status' => $post->status
         ];
-    
-        $this->template->post = $postData;
     }
-    
-    
-
 
     protected function createComponentPostForm(): Form
     {
         $form = new Form;
         $form->addText('title', 'Název')->setRequired();
         $form->addTextArea('content', 'Obsah')->setRequired();
-        
+    
         $form->addSelect('category_id', 'Kategorie', $this->categoryFacade->getCategoriesName())
             ->setPrompt('Vyber kategorii')
             ->setRequired();
     
+        // Add status select field
+        $form->addSelect('status', 'Status', [
+            'OPEN' => 'Open',
+            'CLOSED' => 'Closed',
+            'ARCHIVED' => 'Archived',
+        ])
+            ->setRequired();
+    
+        // Improved validation for image
         $form->addUpload('image', 'Obrázek')
             ->setRequired(false)
-            ->addRule(Form::IMAGE, 'Obrázek musí být ve formátu JPEG, PNG nebo GIF');
+            ->addRule(Form::IMAGE, 'Obrázek musí být ve formátu JPEG, PNG nebo GIF')
+            ->addRule(Form::MAX_FILE_SIZE, 'Obrázek nesmí být větší než 2 MB', 2 * 1024 * 1024);
+    
     
         $form->addSubmit('save', 'Uložit')->setHtmlAttribute('class', 'post-button');
     
@@ -128,24 +146,45 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             $imagePath = 'uploads/' . uniqid() . '_' . $image->getSanitizedName();
             $image->move($imagePath);
         }
-
+    
         if ($this->getParameter('id')) {
-            $this->postFacade->updatePost($this->getParameter('id'), $values->title, $values->content, $values->category_id, $imagePath);
+            // Include status when updating the post
+            $this->postFacade->updatePost($this->getParameter('id'), $values->title, $values->content, $values->category_id, $imagePath, $values->status);
             $this->flashMessage('Příspěvek byl upraven.', 'success');
         } else {
-            $this->postFacade->addPost($values->title, $values->content, $values->category_id, $imagePath);
+            // Include status when creating the post
+            $this->postFacade->addPost($values->title, $values->content, $values->category_id, $imagePath, $values->status);
             $this->flashMessage('Příspěvek byl přidán.', 'success');
         }
-
+    
         $this->redirect('default');
     }
+    
+
+
+
+
+
+
+
+
+
+    // Delete
 
     public function handleDelete(int $id): void
     {
+        $post = $this->postFacade->getPostById($id);
+        
+        if ($post->status === 'ARCHIVED') {
+            $this->flashMessage('Tento příspěvek nemůže být odstraněn, protože je archivován.', 'error');
+            $this->redirect('default');
+        }
+    
         $this->postFacade->deletePost($id);
         $this->flashMessage('Příspěvek byl odstraněn.', 'success');
         $this->redirect('default');
     }
+    
 
     public function handleDeleteImage(int $id): void
     {
@@ -158,6 +197,73 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             $this->redirect('Post:show', $id);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Comments form
+        
+    protected function createComponentCommentForm(): Form
+    {
+        $form = new Form;
+        
+        $form->addText('name', 'Jméno')
+            ->setRequired('Zadejte své jméno.');
+    
+        $form->addEmail('email', 'E-mail')
+            ->setRequired('Zadejte svůj e-mail.');
+    
+        $form->addTextArea('content', 'Komentář')
+            ->setRequired('Napište svůj komentář.');
+    
+        $form->addSubmit('save', 'Odeslat');
+    
+        $form->onSuccess[] = [$this, 'commentFormSucceeded'];
+        return $form;
+    }
+    
+
+    public function commentFormSucceeded(Form $form, \stdClass $values): void
+    {
+        $postId = $this->getParameter('id');
+        if (!$postId) {
+            $this->flashMessage('Chyba: Neplatný příspěvek.', 'error');
+            $this->redirect('this');
+        }
+    
+        $post = $this->postFacade->getPostById($postId);
+        if (!$post) {
+            $this->flashMessage('Příspěvek neexistuje.', 'error');
+            $this->redirect('Homepage:');
+        }
+    
+        // Omezení podle statusu příspěvku
+        if ($post->status === 'ARCHIVED') {
+            $this->flashMessage('Na tento příspěvek nelze přidávat komentáře.', 'error');
+            $this->redirect('this');
+        }
+    
+        if ($post->status === 'CLOSED' && !$this->getUser()->isLoggedIn()) {
+            $this->flashMessage('Pro přidání komentáře k tomuto příspěvku se musíte přihlásit.', 'error');
+            $this->redirect('this');
+        }
+    
+        $this->commentFacade->addComment($postId, $values->name, $values->email, $values->content);
+        $this->flashMessage('Komentář byl přidán.', 'success');
+        $this->redirect('this');
+    }
+    
     
 
 
