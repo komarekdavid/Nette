@@ -77,6 +77,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             $this->error('Příspěvek nebyl nalezen');
         }
     
+        // Zvýšení počtu zobrazení
+        $this->postFacade->incrementViews($id);
+    
         // Přidání názvu kategorie k postu
         $postData = [
             'id' => $post->id,
@@ -85,10 +88,12 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             'image' => $post->image,
             'category_id' => $post->category_id,
             'category_name' => $this->categoryFacade->getCategoryNameById($post->category_id),
+            'views_count' => $post->views_count + 1, // Aktualizace v šabloně
         ];
     
         $this->template->post = $postData;
     }
+    
     
 
 

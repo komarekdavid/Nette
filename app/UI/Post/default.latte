@@ -8,6 +8,8 @@
             <div class="post-item">
                 <h2><a n:href="show, id => $post['id']">{$post['title']}</a></h2>
                 <p class="post-category">Kategorie: {$post['category_name']}</p>
+                
+
                 <p class="post-excerpt">
                     {if strlen($post['content']) > 25}
                         {=substr($post['content'], 0, 25)}...

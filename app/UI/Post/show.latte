@@ -1,6 +1,7 @@
 {block content}
     <h1>{$post['title']}</h1>
     <p class="post-category">Kategorie: {$post['category_name']}</p>
+    <p>Zobrazeno: {$post['views_count']}x</p>
     
     {snippet image}
         {ifset $post['image']}

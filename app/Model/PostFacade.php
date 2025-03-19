@@ -66,4 +66,12 @@ final class PostFacade
         $this->database->table('posts')->where('id', $id)->update(['image' => null]);
     }
 
+    public function incrementViews(int $id): void
+    {
+        $this->database->table('posts')
+            ->where('id', $id)
+            ->update(['views_count' => new \Nette\Database\SqlLiteral('views_count + 1')]);
+    }
+
+
 }
