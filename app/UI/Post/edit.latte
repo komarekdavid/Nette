@@ -37,9 +37,9 @@
     <div class="form-group">
         <label for="status">Status:</label>
         <select name="status" id="status" required>
-            <option value="OPEN" {if $post['status'] === 'OPEN'}selected{/if}>Open</option>
-            <option value="CLOSED" {if $post['status'] === 'CLOSED'}selected{/if}>Published</option>
-            <option value="ARCHIVED" {if $post['status'] === 'ARCHIVED'}selected{/if}>Archived</option>
+            <option value="OPEN" {if $post['status'] === 'OPEN'}selected{/if}>✅ Publikovaný</option>
+            <option value="CLOSED" {if $post['status'] === 'CLOSED'}selected{/if}>🗑️ Uzavřený</option>
+            <option value="ARCHIVED" {if $post['status'] === 'ARCHIVED'}selected{/if}>📦 Archivováno</option>
         </select>
     </div>
 

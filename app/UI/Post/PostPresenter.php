@@ -34,7 +34,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $postList = [];
 
         foreach ($posts as $post) {
-            $postList[] = $this->getPostData($post); // Refactor to use helper function
+            if ($post->status !== 'ARCHIVED' || $this->getUser()->isLoggedIn()) {
+                $postList[] = $this->getPostData($post);
+            }
         }
 
         $this->template->posts = $postList;
@@ -67,28 +69,30 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     public function renderShow(int $id): void
     {
         $post = $this->postFacade->getPostById($id);
-    
+
         if (!$post) {
             $this->error('Příspěvek nebyl nalezen');
         }
-    
-        // Check status for ARCHIVED posts
+
         if ($post->status === 'ARCHIVED' && !$this->getUser()->isLoggedIn()) {
-            $this->flashMessage('Tento příspěvek je archivovaný a přístupný pouze přihlášeným uživatelům.', 'error');
-            $this->redirect('Homepage:');
+            $this->flashMessage('Tento příspěvek je dostupný pouze přihlášeným uživatelům.', 'error');
+            $this->redirect('Home:');
         }
-    
-        // Increment views count
+
         $this->postFacade->incrementViews($id);
-    
-        // Load comments only if not archived
-        $comments = ($post->status !== 'ARCHIVED') ? $this->commentFacade->getCommentsByPost($id) : [];
-    
-        // Pass data to the template
+
+
+        $comments = [];
+        if ($post->status === 'OPEN') {
+            $comments = $this->commentFacade->getCommentsByPost($id);
+        } elseif ($post->status === 'CLOSED' && $this->getUser()->isLoggedIn()) {
+            $comments = $this->commentFacade->getCommentsByPost($id);
+        }
+
         $this->template->post = $this->getPostData($post);
         $this->template->comments = $comments;
     }
-    
+
 
     private function getPostData($post): array
     {
@@ -241,24 +245,25 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             $this->flashMessage('Chyba: Neplatný příspěvek.', 'error');
             $this->redirect('this');
         }
-    
+
         $post = $this->postFacade->getPostById($postId);
         if (!$post) {
             $this->flashMessage('Příspěvek neexistuje.', 'error');
             $this->redirect('Homepage:');
         }
-    
-        // Omezení podle statusu příspěvku
+
+        // ARCHIVED: komentáře zakázány
         if ($post->status === 'ARCHIVED') {
             $this->flashMessage('Na tento příspěvek nelze přidávat komentáře.', 'error');
             $this->redirect('this');
         }
-    
+
+        // CLOSED: komentáře pouze pro přihlášené
         if ($post->status === 'CLOSED' && !$this->getUser()->isLoggedIn()) {
             $this->flashMessage('Pro přidání komentáře k tomuto příspěvku se musíte přihlásit.', 'error');
             $this->redirect('this');
         }
-    
+
         $this->commentFacade->addComment($postId, $values->name, $values->email, $values->content);
         $this->flashMessage('Komentář byl přidán.', 'success');
         $this->redirect('this');

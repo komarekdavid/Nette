@@ -30,12 +30,12 @@ return array (
     'App\\UI\\Home\\HomePresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Home/HomePresenter.php',
-      1 => 1738153094,
+      1 => 1742982962,
     ),
     'App\\UI\\Post\\PostPresenter' => 
     array (
       0 => '/home/david/github-classroom/ossp-cz/Nette/app/UI/Post/PostPresenter.php',
-      1 => 1742383217,
+      1 => 1742984788,
     ),
     'App\\UI\\Sign\\SignPresenter' => 
     array (

@@ -1,57 +1,66 @@
 {block content}
-    <h1>{$post['title']}</h1>
-    <p class="post-category">Kategorie: {$post['category_name']}</p>
-    <p>Zobrazeno: {$post['views_count']}x</p>
-    <p>Status: 
-        {if $post['status'] === 'CLOSED'}
-            <span class="status-label draft">🗑️ Uzavřený</span>
-        {elseif $post['status'] === 'OPEN'}
-            <span class="status-label published">✅ Publikovaný</span>
-        {elseif $post['status'] === 'ARCHIVED'}
-            <span class="status-label archived">📦 Archivováno</span>
-        {/if}
-    </p>
-    
-    {snippet image}
-        {ifset $post['image']}
-            <img src="/{$post['image']}" alt="{$post['title']}" class="post-image" />
-        {/ifset}
-    {/snippet}
-
-    <p>{$post['content']}</p>
-
-    <h2>Komentáře</h2>
-
-    {if count($comments) === 0}
-        <p>Zatím žádné komentáře.</p>
+    {if $post['status'] === 'ARCHIVED' && !$user->isLoggedIn()}
+        <p>Tento příspěvek je archivován a dostupný pouze přihlášeným uživatelům.</p>
     {else}
-        <ul>
-            {foreach $comments as $comment}
-                <li>
-                    <strong>{$comment->name} ({$comment->email})</strong> ({$comment->created_at|date:'j.n.Y H:i'}):<br>
-                    {$comment->content|nl2br}
-                </li>
-            {/foreach}
-        </ul>
-    {/if}
-
-
-    <h3>Přidat komentář</h3>
-    {control commentForm}
-
-
-
-    <div class="post-actions">
-        <a n:href="edit, id => $post['id']" class="post-edit">Upravit</a>
-        {snippet imagebutton}
-            {if isset($post['image']) && $post['image']}
-                <div id="image">
-                    <a n:href="deleteImage! $post['id']" class="delete-image-button ajax" data-nette-ajax="true">🗑️ Smazat obrázek</a>
-                </div>
+        <h1>{$post['title']}</h1>
+        <p class="post-category">Kategorie: {$post['category_name']}</p>
+        <p>Zobrazeno: {$post['views_count']}x</p>
+        <p>Status: 
+            {if $post['status'] === 'CLOSED'}
+                <span class="status-label draft">🗑️ Uzavřený</span>
+            {elseif $post['status'] === 'OPEN'}
+                <span class="status-label published">✅ Publikovaný</span>
+            {elseif $post['status'] === 'ARCHIVED'}
+                <span class="status-label archived">📦 Archivováno</span>
             {/if}
+        </p>
+
+        {snippet image}
+            {ifset $post['image']}
+                <img src="/{$post['image']}" alt="{$post['title']}" class="post-image" />
+            {/ifset}
         {/snippet}
 
-        <a n:href="delete!, id => $post['id']" class="post-delete" onclick="return confirm('Opravdu chcete smazat tento příspěvek?')">Smazat</a>
+        <p>{$post['content']}</p>
+
+        <h2>Komentáře</h2>
+
+        {if count($comments) === 0}
+            <p>Zatím žádné komentáře.</p>
+        {else}
+            <ul>
+                {foreach $comments as $comment}
+                    <li>
+                        <strong>{$comment->name} ({$comment->email})</strong> ({$comment->created_at|date:'j.n.Y H:i'}):<br>
+                        {$comment->content|nl2br}
+                    </li>
+                {/foreach}
+            </ul>
+        {/if}
+
+        {if $post['status'] !== 'ARCHIVED'}
+            {if $post['status'] === 'OPEN' || ($post['status'] === 'CLOSED' && $user->isLoggedIn())}
+                <h3>Přidat komentář</h3>
+                {control commentForm}
+            {/if}
+        {/if}
+
+        {if $user->isLoggedIn()}
+            <div class="post-actions">
+                <a n:href="edit, id => $post['id']" class="post-edit">Upravit</a>
+                
+                {snippet imagebutton}
+                    {if isset($post['image']) && $post['image']}
+                        <div id="image">
+                            <a n:href="deleteImage! $post['id']" class="delete-image-button ajax" data-nette-ajax="true">🗑️ Smazat obrázek</a>
+                        </div>
+                    {/if}
+                {/snippet}
+
+                <a n:href="delete!, id => $post['id']" class="post-delete" onclick="return confirm('Opravdu chcete smazat tento příspěvek?')">Smazat</a>
+            </div>
+        {/if}
+
         <a href="{link Post:default}" class="post-back">Zpět</a>
-    </div>
+    {/if}
 {/block}
