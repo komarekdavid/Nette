@@ -1,3 +1,4 @@
+/* Body */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -6,6 +7,8 @@ body {
     background-color: #f4f4f9;
     color: #333;
 }
+
+/* Navigation */
 .navig {
     background-color: #007BFF;
     padding: 10px;
@@ -14,34 +17,44 @@ body {
     justify-content: space-between;
     margin: 0;
 }
+
 .navig li {
     display: inline;
 }
+
 .navig li a {
     color: white;
     text-decoration: none;
     padding: 5px 10px;
+    transition: background-color 0.3s ease;
 }
+
 .navig li a:hover {
     background-color: #0056b3;
     border-radius: 5px;
 }
+
+/* Flash Messages */
 .flash {
     margin: 10px 0;
     padding: 10px;
-    border: 1px solid transparent;
     border-radius: 5px;
+    font-size: 1.1em;
 }
+
 .flash.success {
     background-color: #d4edda;
     border-color: #c3e6cb;
     color: #155724;
 }
+
 .flash.error {
     background-color: #f8d7da;
     border-color: #f5c6cb;
     color: #721c24;
 }
+
+/* Container */
 .container {
     width: 80%;
     margin: 20px auto;
@@ -51,19 +64,22 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Post Title */
 .post-title {
-    font-size: 24px;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-
+/* Post Category */
 .post-category {
     font-style: italic;
     color: #777;
     margin-bottom: 10px;
 }
 
+/* Post Image */
 .post-image {
     max-width: 100%;
     height: auto;
@@ -72,6 +88,7 @@ body {
     display: block;
 }
 
+/* Post Actions */
 .post-actions {
     margin-top: 20px;
     display: flex;
@@ -106,16 +123,16 @@ body {
     opacity: 0.8;
 }
 
-
-
-.game-header {
+/* Game Section */
+.game-header,
+.game-detail-header {
     text-align: center;
-    font-size: 2em;
+    font-size: 2rem;
     margin-bottom: 20px;
     color: #444;
 }
 
-/* Tabulka */
+/* Game Table */
 .game-table {
     width: 100%;
     border-collapse: collapse;
@@ -129,10 +146,6 @@ body {
     color: #fff;
 }
 
-.game-row-header {
-    text-align: left;
-}
-
 .game-cell-header {
     padding: 10px;
     text-transform: uppercase;
@@ -140,7 +153,10 @@ body {
     border-bottom: 2px solid #ddd;
 }
 
-/* Řádky tabulky */
+.game-row-header {
+    text-align: left;
+}
+
 .game-table-body .game-row {
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s;
@@ -155,9 +171,8 @@ body {
     text-align: left;
 }
 
-/* Tlačítka */
+/* Game Buttons */
 .game-button {
-    text-decoration: none;
     display: inline-block;
     padding: 8px 15px;
     font-size: 0.9em;
@@ -173,19 +188,9 @@ body {
 
 .game-detail-button:hover {
     background-color: #0056b3;
-    color: #fff;
 }
 
-
-/* Nadpis detailu */
-.game-detail-header {
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #444;
-}
-
-/* Kontejner detailu hry */
+/* Game Detail */
 .game-detail {
     background-color: #fff;
     padding: 20px;
@@ -207,16 +212,7 @@ body {
     color: #555;
 }
 
-/* Tlačítka */
-.game-button {
-    text-decoration: none;
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 0.9em;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
+/* Game Back Button */
 .game-back-button {
     background-color: #6c757d;
     color: #fff;
@@ -228,10 +224,9 @@ body {
 
 .game-back-button:hover {
     background-color: #5a6268;
-    color: #fff;
 }
 
-
+/* Category Section */
 .category-title {
     font-size: 24px;
     font-weight: bold;
@@ -283,18 +278,38 @@ body {
     height: 100px;
 }
 
-
-
-
-
-/* Nadpisy */
-.post-title {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 2em;
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
 }
 
-/* Tlačítko pro přidání příspěvku */
+.page-link {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.current-page {
+    font-weight: bold;
+    color: #2d87f0;
+}
+
+.page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination span {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Post Button */
 .post-button {
     display: block;
     width: fit-content;
@@ -312,7 +327,7 @@ body {
     background-color: #0056b3;
 }
 
-/* Seznam příspěvků */
+/* Post List */
 .post-list {
     display: flex;
     flex-direction: column;
@@ -321,7 +336,7 @@ body {
     padding: 20px;
 }
 
-/* Jednotlivý příspěvek */
+/* Post Item */
 .post-item {
     width: 80%;
     max-width: 700px;
@@ -336,7 +351,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Nadpis příspěvku */
+/* Post Item Header */
 .post-item h2 {
     margin: 0 0 10px;
 }
@@ -351,23 +366,7 @@ body {
     color: #007bff;
 }
 
-/* Kategorie */
-.post-category {
-    font-style: italic;
-    color: #777;
-    margin-bottom: 10px;
-}
-
-/* Obrázek příspěvku */
-.post-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin: 10px 0;
-    display: block;
-}
-
-/* Odkaz "Číst více" */
+/* Read More Link */
 .post-read-more {
     display: inline-block;
     margin-top: 10px;

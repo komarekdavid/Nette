@@ -92,4 +92,18 @@ final class PostFacade
         return $this->database->table('categories')->fetchAll();
     }
 
+    public function getPostsWithoutStatusFilter(int $offset, int $limit)
+    {
+        return $this->database->table('posts') 
+            ->limit($limit, $offset)  
+            ->fetchAll(); 
+    }
+
+    public function getTotalPostsCount(): int
+    {
+        return $this->database->table('posts')->count(); 
+    }
+
+    
+
 }

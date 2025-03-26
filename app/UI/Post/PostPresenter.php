@@ -7,6 +7,7 @@ use App\Model\CommentFacade;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Http\FileUpload;
+use Nette\Utils\Paginator;
 
 final class PostPresenter extends Nette\Application\UI\Presenter
 {
@@ -17,7 +18,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     ) {
     }
 
-
     protected function beforeRender(): void
     {
         $this->template->addFilter('nl2br', function ($s) {
@@ -25,21 +25,28 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         });
     }
 
-    
-
-
-    public function renderDefault(): void
+    public function renderDefault(int $page = 1): void
     {
-        $posts = $this->postFacade->getPosts();
-        $postList = [];
-
-        foreach ($posts as $post) {
-            if ($post->status !== 'ARCHIVED' || $this->getUser()->isLoggedIn()) {
-                $postList[] = $this->getPostData($post);
-            }
-        }
-
-        $this->template->posts = $postList;
+        // Počet položek na stránku
+        $itemsPerPage = 5;
+        
+        // Vypočítání offsetu pro stránkování
+        $offset = ($page - 1) * $itemsPerPage;
+        
+        // Získání všech příspěvků (bez filtru podle statusu)
+        $allPosts = $this->postFacade->getPostsWithoutStatusFilter($offset, $itemsPerPage);
+        
+        // Vytvoření paginatoru
+        $paginator = new Paginator();
+        $paginator->setItemsPerPage($itemsPerPage);
+        $paginator->setPage($page);
+        
+        // Nastavení počtu položek pro paginator (celkový počet příspěvků)
+        $paginator->setItemCount($this->postFacade->getTotalPostsCount());
+        
+        // Předání příspěvků a paginatoru do šablony
+        $this->template->posts = $allPosts;
+        $this->template->paginator = $paginator;
     }
 
     public function renderEdit(int $id): void
@@ -48,8 +55,8 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         if (!$post) {
             $this->error('Příspěvek nebyl nalezen');
         }
-    
-        // Pass categories to the template
+
+        // Předání kategorií do šablony
         $this->template->categories = $this->categoryFacade->getCategories();
     
         // Předání výchozích hodnot do formuláře
@@ -64,7 +71,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     
         $this->template->post = $postData;
     }
-    
 
     public function renderShow(int $id): void
     {
@@ -81,7 +87,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
         $this->postFacade->incrementViews($id);
 
-
         $comments = [];
         if ($post->status === 'OPEN') {
             $comments = $this->commentFacade->getCommentsByPost($id);
@@ -92,7 +97,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $this->template->post = $this->getPostData($post);
         $this->template->comments = $comments;
     }
-
 
     private function getPostData($post): array
     {
@@ -118,7 +122,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             ->setPrompt('Vyber kategorii')
             ->setRequired();
     
-        // Add status select field
         $form->addSelect('status', 'Status', [
             'OPEN' => 'Open',
             'CLOSED' => 'Closed',
@@ -126,12 +129,10 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         ])
             ->setRequired();
     
-        // Improved validation for image
         $form->addUpload('image', 'Obrázek')
             ->setRequired(false)
             ->addRule(Form::IMAGE, 'Obrázek musí být ve formátu JPEG, PNG nebo GIF')
             ->addRule(Form::MAX_FILE_SIZE, 'Obrázek nesmí být větší než 2 MB', 2 * 1024 * 1024);
-    
     
         $form->addSubmit('save', 'Uložit')->setHtmlAttribute('class', 'post-button');
     
@@ -139,7 +140,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     
         return $form;
     }
-    
 
     public function postFormSucceeded(Form $form, \stdClass $values): void
     {
@@ -163,17 +163,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     
         $this->redirect('default');
     }
-    
-
-
-
-
-
-
-
-
-
-    // Delete
 
     public function handleDelete(int $id): void
     {
@@ -188,7 +177,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Příspěvek byl odstraněn.', 'success');
         $this->redirect('default');
     }
-    
 
     public function handleDeleteImage(int $id): void
     {
@@ -202,22 +190,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Comments form
-        
     protected function createComponentCommentForm(): Form
     {
         $form = new Form;
@@ -236,7 +208,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $form->onSuccess[] = [$this, 'commentFormSucceeded'];
         return $form;
     }
-    
 
     public function commentFormSucceeded(Form $form, \stdClass $values): void
     {
@@ -268,8 +239,4 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Komentář byl přidán.', 'success');
         $this->redirect('this');
     }
-    
-    
-
-
 }
