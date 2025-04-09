@@ -87,16 +87,31 @@ final class PostFacade
         $this->database->query($sql, $id);
     }
 
-    public function getCategories(): array
-    {
-        return $this->database->table('categories')->fetchAll();
-    }
+
 
     public function getPostsWithoutStatusFilter(int $offset, int $limit)
     {
-        return $this->database->table('posts') 
+        $post = $this->database->table('posts') 
             ->limit($limit, $offset)  
             ->fetchAll(); 
+            $categories = $this->database->table('category')->fetchAll();
+            $returnPosts = [];
+            $i = 0;
+            foreach ($post as $p) {
+                $returnPosts[$i] = [];
+                foreach ($p as $key => $value) {
+                    $returnPosts[$i][$key] = $value;
+
+                }
+                foreach ($categories as $c) {
+                    if ($p->category_id === $c->id) {
+                        $returnPosts[$i]['category_name']= $c->name;
+                        break;
+                    }
+                }
+                $i += 1;
+            }
+            return $returnPosts;
     }
 
     public function getTotalPostsCount(): int

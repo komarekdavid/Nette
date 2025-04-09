@@ -7,7 +7,7 @@
         {foreach $posts as $post}
             <div class="post-item">
                 <h2><a n:href="show, id => $post['id']">{$post['title']}</a></h2>
-                <p class="post-category">Kategorie: {$post['category_id']}</p>
+                <p class="post-category">Kategorie: {$post['category_name']}</p>
                 <p>Status: 
                     {if $post['status'] === 'CLOSED'}
                         <span class="status-label draft">🗑️ Uzavřený</span>

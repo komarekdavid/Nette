@@ -27,26 +27,23 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
     public function renderDefault(int $page = 1): void
     {
-        // Počet položek na stránku
         $itemsPerPage = 5;
         
-        // Vypočítání offsetu pro stránkování
         $offset = ($page - 1) * $itemsPerPage;
         
-        // Získání všech příspěvků (bez filtru podle statusu)
         $allPosts = $this->postFacade->getPostsWithoutStatusFilter($offset, $itemsPerPage);
         
-        // Vytvoření paginatoru
         $paginator = new Paginator();
         $paginator->setItemsPerPage($itemsPerPage);
         $paginator->setPage($page);
-        
-        // Nastavení počtu položek pro paginator (celkový počet příspěvků)
         $paginator->setItemCount($this->postFacade->getTotalPostsCount());
         
-        // Předání příspěvků a paginatoru do šablony
         $this->template->posts = $allPosts;
         $this->template->paginator = $paginator;
+
+
+
+        $this->template->categories = $this->categoryFacade->getCategories();
     }
 
     public function renderEdit(int $id): void
