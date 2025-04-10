@@ -4,6 +4,7 @@ namespace App\UI\Post;
 use App\Model\PostFacade;
 use App\Model\CategoryFacade;
 use App\Model\CommentFacade;
+
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Http\FileUpload;
@@ -27,24 +28,42 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
     public function renderDefault(int $page = 1): void
     {
-        $itemsPerPage = 5;
-        
-        $offset = ($page - 1) * $itemsPerPage;
-        
-        $allPosts = $this->postFacade->getPostsWithoutStatusFilter($offset, $itemsPerPage);
-        
-        $paginator = new Paginator();
-        $paginator->setItemsPerPage($itemsPerPage);
-        $paginator->setPage($page);
-        $paginator->setItemCount($this->postFacade->getTotalPostsCount());
-        
-        $this->template->posts = $allPosts;
-        $this->template->paginator = $paginator;
-
-
-
         $this->template->categories = $this->categoryFacade->getCategories();
+        // Získání hodnoty z GET parametru
+        $postId = $this->getHttpRequest()->getQuery('post');
+    
+        // Získání všech kategorií pro selectbox
+        $this->template->categories = $this->categoryFacade->getCategories();
+        $this->template->selectedCategory = $postId;
+    
+        // Filtrování podle vybrané kategorie (pokud je)
+        if ($postId) {
+            $this->template->games = $this->postFacade->getPostByCategory($postId);
+            $totalCount = $this->postFacade->getPostCountByCategory($postId);
+            $posts = $this->postFacade->getPostByCategoryWithLimit($postId, ($page - 1) * 5, 5);
+        } else {
+            $this->template->games = $this->postFacade->getPostsWithCategoryName();
+            $totalCount = $this->postFacade->getTotalPostsCount();
+            $posts = $this->postFacade->getPostsWithoutStatusFilter(($page - 1) * 5, 5);
+        }
+    
+        // Stránkování
+        $paginator = new Paginator();
+        $paginator->setItemsPerPage(5);
+        $paginator->setPage($page);
+        $paginator->setItemCount($totalCount);
+    
+        // Předání do šablony
+        $this->template->posts = $posts;
+        $this->template->paginator = $paginator;
     }
+    
+
+
+    
+
+
+    
 
     public function renderEdit(int $id): void
     {

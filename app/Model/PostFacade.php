@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette\Database\Explorer;
+use Nette\Database\Table\Selection;
 
 final class PostFacade
 {
@@ -30,9 +31,9 @@ final class PostFacade
 
     public function getPostsWithCategoryName(bool $onlyPublic = false)
     {
-        $sql = 'SELECT posts.*, categories.name AS category_name
+        $sql = 'SELECT posts.*, category.name AS category_name
                 FROM posts
-                LEFT JOIN categories ON posts.category_id = categories.id
+                LEFT JOIN category ON posts.category_id = category.id
                 ORDER BY created_at DESC';
         
         if ($onlyPublic) {
@@ -42,6 +43,27 @@ final class PostFacade
 
         return $this->database->query($sql)->fetchAll();
     }
+
+
+    public function getPostCountByCategory(int $categoryId): int
+    {
+        return $this->database
+            ->table('posts')
+            ->where('category_id', $categoryId)
+            ->count('*');
+    }
+
+
+    public function getPostByCategoryWithLimit(int $categoryId, int $offset, int $limit): Selection
+    {
+        return $this->database
+            ->table('posts')
+            ->where('category_id', $categoryId)
+            ->order('created_at DESC') // můžeš upravit podle potřeby
+            ->limit($limit, $offset);
+    }
+
+
 
     public function addPost(string $title, string $content, int $category_id, ?string $image = null, string $status = 'DRAFT'): void
     {
@@ -85,6 +107,16 @@ final class PostFacade
     {
         $sql = 'UPDATE posts SET views_count = views_count + 1 WHERE id = ?';
         $this->database->query($sql, $id);
+    }
+
+
+
+
+    public function getPostByCategory(int $category_id) {
+        return $this->database->table('posts')
+            ->where('category_id', $category_id)
+            ->order('created_at DESC')
+            ->fetchAll();
     }
 
 

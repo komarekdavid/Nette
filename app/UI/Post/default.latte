@@ -3,11 +3,30 @@
 
     <a n:href="create" class="post-button">Přidat nový příspěvek</a>
 
+
+
+    <form method="get" action="{link this}">
+        <select name="post">
+            <option value="">Všechny kategorie</option>
+            {foreach $categories as $category}
+                <option value="{$category->id}" {if $selectedCategory == $category->id}selected{/if}>
+                    {$category->name}
+                </option>
+            {/foreach}
+        </select>
+        <button type="submit">Filtrovat</button>
+    </form>
+
+
     <div class="post-list">
         {foreach $posts as $post}
             <div class="post-item">
                 <h2><a n:href="show, id => $post['id']">{$post['title']}</a></h2>
-                <p class="post-category">Kategorie: {$post['category_name']}</p>
+                {foreach $categories as $category}
+                    {if $category->id === $post['category_id']}
+                        <p class="post-category">Kategorie: {$category->name}</p>
+                    {/if}
+                {/foreach}
                 <p>Status: 
                     {if $post['status'] === 'CLOSED'}
                         <span class="status-label draft">🗑️ Uzavřený</span>
